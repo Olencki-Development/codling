@@ -6,6 +6,7 @@
   "scripts": {
     "build": "npm run clean && npm run compile",
     "clean": "rimraf dist && rimraf tsconfig.tsbuildinfo",
+    "compile": "tsc --build",
     "prepack": "npm run dist",
     "test": "mocha -r ts-node/register --project tsconfig.json \"./src/setup.test.ts\" \"./src/**/*.test.ts\"",
     "test:coverage": "nyc npm run test",
