@@ -4,7 +4,8 @@
     "paths": {
       "@utils/entity": ["entity/src/*"],
       "@utils/promise-class": ["promise-class/src/*"],
-      "@utils/testable": ["testable/src/*"]
+      "@utils/testable": ["testable/src/*"],
+      "@utils/use-default": ["use-default/src/*"]
     }
   }
 }
