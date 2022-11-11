@@ -1,0 +1,23 @@
+{
+  "name": "@utils/testable",
+  "version": "1.0.0",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "npm run clean && npm run compile",
+    "clean": "rimraf dist && rimraf tsconfig.tsbuildinfo",
+    "prepack": "npm run dist",
+    "test": "echo 'no test'",
+    "test:types": "tsc --noEmit"
+  },
+  "devDependencies": {
+    "@halliganjs/service-container": "^1.1.3",
+    "@types/chai": "^4.3.4",
+    "@types/mocha": "^9.1.1",
+    "@types/sinon": "^10.0.13",
+    "chai": "^4.3.7",
+    "mocha": "^9.2.2",
+    "nyc": "^15.1.0",
+    "sinon": "^13.0.2"
+  }
+}
