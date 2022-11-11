@@ -1,0 +1,34 @@
+{
+  "name": "utils",
+  "version": "1.0.0",
+  "description": "Utility packages",
+  "main": "index.js",
+  "scripts": {
+    "build": "lerna run build --stream",
+    "format": "prettier --write '**/*.{ts,js,json}'",
+    "lint": "eslint '**/*.{ts,js,json}'",
+    "prepare": "npx husky install",
+    "test": "lerna run test --stream",
+    "test:coverage": "lerna run test:coverage --stream",
+    "test:types": "lerna run test:types --stream",
+    "watch": "nodemon"
+  },
+  "workspaces": [
+    "packages/*"
+  ],
+  "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^5.42.1",
+    "@typescript-eslint/parser": "^5.42.1",
+    "eslint": "^8.27.0",
+    "husky": "^8.0.2",
+    "lerna": "^6.0.3",
+    "lint-staged": "^13.0.3",
+    "prettier": "^2.7.1"
+  },
+  "lint-staged": {
+    "**/*.+(ts|js|json)": [
+      "npm run format",
+      "npm run lint"
+    ]
+  }
+}
