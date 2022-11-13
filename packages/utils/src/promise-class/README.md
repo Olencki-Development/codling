@@ -1,4 +1,4 @@
-# @utils/promise-class
+# @codling/utils/promise-class
 > A class that allows extension of a promise object for customization of the result
 
 ### Examples

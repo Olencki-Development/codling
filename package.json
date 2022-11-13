@@ -4,12 +4,12 @@
   "description": "Monorepo for codling packages",
   "main": "index.js",
   "scripts": {
-    "build": "lerna run build",
+    "build": "lerna run build --stream",
     "format": "prettier --write '**/*.{ts,js,json}'",
     "lint": "eslint '**/*.{ts,js,json}'",
     "prepare": "npx husky install",
-    "test": "lerna run test",
-    "test:coverage": "lerna run test:coverage",
+    "test": "lerna run test --stream",
+    "test:coverage": "lerna run test:coverage --stream",
     "test:types": "lerna run test:types"
   },
   "workspaces": [

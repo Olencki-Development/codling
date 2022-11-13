@@ -1,4 +1,4 @@
-# @utils/use-default
+# @codling/utils/use-default
 > Value manipulate for properties on a class to provide defaults when the property is set to null or undefined at runtime
 
 ### Examples
@@ -6,6 +6,8 @@
 ##### Basic Example
 
 ```
+import { UseDefault } from '@codling/utils'
+
 class MyTest {
   @UseDefault()
   foo: string | null | undefined = 'bar'
@@ -27,6 +29,8 @@ instance.foo // hello world
 ##### Advanced Example
 
 ```
+import { UseDefault } from '@codling/utils'
+
 class MyTest {
   @UseDefault({ whenNull: true })
   foo: string | null | undefined = 'bar'

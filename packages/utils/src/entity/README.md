@@ -1,4 +1,4 @@
-# @utils/entity
+# @codling/utils/entity
 > A data management package for easily validating, attaching items to and modifying data
 
 ### Examples
