@@ -1,3 +1,3 @@
-import { beforeEachHandler } from '@utils/testable';
+import { beforeEachHandler } from '@codling/testable';
 
 beforeEach(beforeEachHandler);

@@ -2,8 +2,9 @@
   "compilerOptions": {
     "baseUrl": "./packages",
     "paths": {
-      "@codling/utils": ["utils/src/*"],
-      "@codline/testable": ["testable/src/*"]
+      "@codling/environments": ["environments/src/*"],
+      "@codline/testable": ["testable/src/*"],
+      "@codling/utils": ["utils/src/*"]
     }
   }
 }

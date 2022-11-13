@@ -1,6 +1,6 @@
 import { UseDefault } from '.';
 
-describe('@utils/use-default/UseDefault', function () {
+describe('@codling/utils/use-default/UseDefault', function () {
   class Item {
     @UseDefault()
     foo: string | null | undefined = 'bar';
