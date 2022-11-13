@@ -6,7 +6,7 @@
 ##### Basic Example
 
 ```
-import { PromiseClass } from '@utils/promise-class'
+import { PromiseClass } from '@codling/utils'
 
 class Counter extends PromiseClass<number> {
   protected count = 0;

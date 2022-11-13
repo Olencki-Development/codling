@@ -6,7 +6,7 @@
 ##### Basic Example
 
 ```
-import { createEntity } from '@utils/entity'
+import { createEntity } from '@codling/utils'
 import { z } from 'zod'
 
 const IUser = z.object({
@@ -45,7 +45,7 @@ myUser.toJSON()
 ##### Advanced Example
 
 ```
-import { createEntity } from '@utils/entity'
+import { createEntity } from '@codling/utils'
 import { z } from 'zod'
 
 const IUser = z.object({

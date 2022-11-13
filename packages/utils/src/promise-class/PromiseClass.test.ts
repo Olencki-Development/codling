@@ -1,6 +1,6 @@
 import { PromiseClass } from './';
 
-describe('@utils/promise-class/PromiseClass', function () {
+describe('@codling/utils/promise-class/PromiseClass', function () {
   class Item extends PromiseClass<number> {
     protected async _fetchResult(): Promise<number> {
       return 1;
