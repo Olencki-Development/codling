@@ -1,5 +1,5 @@
 {
-  "name": "@utils/entity",
+  "name": "@codling/utils",
   "version": "1.0.0",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -13,7 +13,7 @@
     "test:types": "tsc --noEmit"
   },
   "devDependencies": {
-    "@utils/testable": "^1.0.0"
+    "@codling/testable": "^1.0.0"
   },
   "dependencies": {
     "zod": "^3.19.1"

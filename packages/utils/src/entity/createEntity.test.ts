@@ -1,7 +1,7 @@
 import { z } from 'zod';
-import { createEntity } from './';
+import { createEntity } from '.';
 
-describe('@utils/entity/createEntity', function () {
+describe('@codling/utils/entity/createEntity', function () {
   const schema = z.object({
     foo: z.literal('bar'),
   });
@@ -15,5 +15,13 @@ describe('@utils/entity/createEntity', function () {
     const Result = createEntity(schema);
     const instance = Result.from({ foo: 'bar' });
     this.assert.instanceOf(instance, Result);
+  });
+
+  it('should create multiple instance of class', function () {
+    const Result = createEntity(schema);
+    const instance = Result.from([{ foo: 'bar' }, { foo: 'bar' }]);
+    this.assert.isArray(instance);
+    this.assert.lengthOf(instance, 2);
+    this.assert.instanceOf(instance[0], Result);
   });
 });

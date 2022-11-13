@@ -1,7 +1,7 @@
 import { z, ZodError } from 'zod';
-import { Entity } from './';
+import { Entity } from '.';
 
-describe('@utils/entity/Entity', function () {
+describe('@codling/utils/entity/Entity', function () {
   const schema = z.object({
     foo: z.literal('bar'),
   });
