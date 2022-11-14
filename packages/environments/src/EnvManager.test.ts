@@ -70,14 +70,12 @@ describe('@codling/environments/EnvManager', function () {
       .resolves({ url: 'https://localhost:8000' });
     instance.onRequestEnvs(envStub);
 
-    const populateStub = this.sinon
-      .stub()
-      .resolves({
-        foo: 'bar',
-        count: 2,
-        url: 'https://localhost:8000',
-        environment: 'local',
-      });
+    const populateStub = this.sinon.stub().resolves({
+      foo: 'bar',
+      count: 2,
+      url: 'https://localhost:8000',
+      environment: 'local',
+    });
     instance.onPopulateConfig(populateStub);
 
     const result = await instance.fetchConfig();
