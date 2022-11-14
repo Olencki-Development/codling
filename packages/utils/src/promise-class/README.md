@@ -5,7 +5,7 @@
 
 ##### Basic Example
 
-```
+```ts
 import { PromiseClass } from '@codling/utils'
 
 class Counter extends PromiseClass<number> {
@@ -34,4 +34,31 @@ let count = await myCounter // 2
 myCounter.add().add().subtract().add()
 
 count = await myCounter // 4
+```
+
+##### Advanced Example
+
+```ts
+import { PromiseClass } from '@codling/utils'
+
+class Builder<T> {
+  operations: T
+
+  modify(): Builder<S> {
+    return new Builder([
+      ...operations,
+      { mode: 'single' }
+    ])
+  }
+
+  protected async _fetchResult(): Promise<T> {
+    return Promise.resolve(this.operations)
+  }
+}
+
+class BuildManager {
+  query(): Builder<[]> {
+    return new Builder([]);
+  }
+}
 ```

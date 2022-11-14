@@ -10,7 +10,8 @@
     "prepare": "npx husky install",
     "test": "lerna run test --stream",
     "test:coverage": "lerna run test:coverage --stream",
-    "test:types": "lerna run test:types"
+    "test:types": "lerna run test:types",
+    "postinstall": "npm run build"
   },
   "workspaces": [
     "packages/*"
