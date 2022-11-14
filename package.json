@@ -2,7 +2,13 @@
   "name": "codling",
   "version": "1.0.0",
   "description": "Monorepo for codling packages",
-  "main": "index.js",
+  "license": "MIT",
+  "author": "Brian Olencki",
+  "homepage": "https://github.com/Olencki-Development/codling#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Olencki-Development/codling.git"
+  },
   "scripts": {
     "build": "lerna run build --stream",
     "format": "prettier --write '**/*.{ts,js,json}'",

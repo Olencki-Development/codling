@@ -3,6 +3,13 @@
   "version": "1.0.0",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
+  "license": "MIT",
+  "author": "Brian Olencki",
+  "homepage": "https://github.com/Olencki-Development/codling#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Olencki-Development/codling.git"
+  },
   "scripts": {
     "build": "npm run clean && npm run compile",
     "clean": "rimraf dist && rimraf tsconfig.tsbuildinfo",
