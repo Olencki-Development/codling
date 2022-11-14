@@ -16,7 +16,7 @@
     "format": "prettier --write '**/*.{ts,js,json}'",
     "lint": "eslint '**/*.{ts,js,json}'",
     "prepare": "npx husky install",
-    "publish": "lerna publish --no-private",
+    "publish": "lerna publish --no-private --access public",
     "test": "lerna run test --stream",
     "test:coverage": "lerna run test:coverage --stream",
     "test:types": "lerna run test:types",
