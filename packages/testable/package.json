@@ -14,7 +14,6 @@
     "build": "npm run clean && npm run compile",
     "clean": "rimraf dist && rimraf tsconfig.tsbuildinfo",
     "compile": "tsc --build",
-    "prepack": "npm run dist",
     "test": "echo 'no test'",
     "test:types": "tsc --noEmit"
   },
@@ -28,5 +27,6 @@
     "nyc": "^15.1.0",
     "sinon": "^13.0.2",
     "ts-node": "^10.9.1"
-  }
+  },
+  "gitHead": "37087320b17392fff07c3643f26dab70978396e7"
 }
