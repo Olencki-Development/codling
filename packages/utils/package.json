@@ -1,6 +1,6 @@
 {
   "name": "@codling/utils",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "license": "MIT",
@@ -20,7 +20,7 @@
     "test:types": "tsc --noEmit"
   },
   "devDependencies": {
-    "@codling/testable": "^1.0.0"
+    "@codling/testable": "^1.0.1"
   },
   "dependencies": {
     "zod": "^3.19.1"
