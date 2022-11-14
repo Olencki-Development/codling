@@ -25,4 +25,7 @@ export type RequestEnvFunc<E extends EnvSchema> = () => Promise<z.infer<E>>;
 export type ConfigEnvPopulateFunc<
   S extends ConfigSchema,
   E extends EnvSchema
-> = (partialConfig: z.infer<S>, envVars: z.infer<E>) => z.infer<S>;
+> = (
+  partialConfig: EnvironmentConfig<S>,
+  envVars: z.infer<E>
+) => EnvironmentConfig<S>;
