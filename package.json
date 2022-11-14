@@ -11,6 +11,8 @@
   },
   "scripts": {
     "build": "lerna run build --stream",
+    "clean": "lerna run clean --parallel",
+    "clean:all": "npm run clean && lerna clean -y && rimraf node_modules",
     "format": "prettier --write '**/*.{ts,js,json}'",
     "lint": "eslint '**/*.{ts,js,json}'",
     "prepare": "npx husky install",
@@ -29,7 +31,8 @@
     "husky": "^8.0.2",
     "lerna": "^6.0.3",
     "lint-staged": "^13.0.3",
-    "prettier": "^2.7.1"
+    "prettier": "^2.7.1",
+    "rimraf": "^3.0.2"
   },
   "lint-staged": {
     "**/*.+(ts|js|json)": [
