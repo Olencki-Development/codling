@@ -1,3 +1,3 @@
 export { createEntity } from './createEntity';
-export { Entity } from './Entity';
+export { EntityBase } from './EntityBase';
 export * from './types';

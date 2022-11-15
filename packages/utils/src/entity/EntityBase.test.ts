@@ -1,19 +1,19 @@
 import { z, ZodError } from 'zod';
-import { Entity } from '.';
+import { EntityBase } from '.';
 
-describe('@codling/utils/entity/Entity', function () {
+describe('@codling/utils/entity/EntityBase', function () {
   const schema = z.object({
     foo: z.literal('bar'),
   });
-  let instance: Entity<typeof schema> & z.infer<typeof schema>;
+  let instance: EntityBase<typeof schema>;
 
   beforeEach(function () {
-    instance = new Entity<typeof schema>(
+    instance = new EntityBase(
       {
         foo: 'bar',
       },
       schema
-    ) as any;
+    );
   });
 
   describe('toJSON', function () {

@@ -1,15 +1,18 @@
-import type { z, SomeZodObject } from 'zod';
-import { Entity } from '.';
+import type { z, SomeZodObject, ZodError } from 'zod';
 
 export type EntitySchema = SomeZodObject;
 export type EntityShape<S extends EntitySchema> = z.infer<S>;
 
-export type EntityClass<S extends EntitySchema> = {
-  from(arrayFields: Array<EntityShape<S>>): Array<Entity<S> & EntityShape<S>>;
-  from(fields: EntityShape<S>): Entity<S> & EntityShape<S>;
+export interface IEntityBase<S extends EntitySchema> {
+  readonly rawFields: EntityShape<S>;
+  readonly schema: EntityShape<S>;
 
-  /**
-   * @depreciated use static method `.from(fields: EntityShape<S>)`
-   */
-  new (fields: EntityShape<S>, schema: S): Entity<S> & EntityShape<S>;
-};
+  toJSON(): EntityShape<S>;
+  toString(): string;
+  validate(shouldThrow: boolean): true | ZodError;
+}
+
+export type EntityInstance<
+  S extends EntitySchema,
+  T extends IEntityBase<S> = IEntityBase<S>
+> = EntityShape<S> & T;

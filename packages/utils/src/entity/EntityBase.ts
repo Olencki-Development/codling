@@ -1,7 +1,20 @@
-import { EntitySchema, EntityShape } from './types';
+import {
+  EntitySchema,
+  EntityShape,
+  IEntityBase,
+  EntityInstance,
+} from './types';
 
-export class Entity<S extends EntitySchema> {
+export class EntityBaseImplied<S extends EntitySchema>
+  implements IEntityBase<S>
+{
+  /**
+   * Raw unmodified fields that were originally assigned.
+   */
+  readonly rawFields: EntityShape<S>;
+
   constructor(fields: EntityShape<S>, readonly schema: S) {
+    this.rawFields = fields;
     Object.assign(this, this.schema.parse(fields));
   }
 
@@ -41,3 +54,15 @@ export class Entity<S extends EntitySchema> {
     return true;
   }
 }
+
+export type EntityBase<S extends EntitySchema> = EntityInstance<
+  S,
+  EntityBaseImplied<S>
+>;
+export type EntityBaseClass = {
+  new <S extends EntitySchema>(
+    fields: EntityShape<S>,
+    schema: S
+  ): EntityBase<S>;
+};
+export const EntityBase = EntityBaseImplied as EntityBaseClass;
