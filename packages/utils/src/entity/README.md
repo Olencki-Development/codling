@@ -5,7 +5,7 @@
 
 ##### Basic Example
 
-```
+```ts
 import { createEntity } from '@codling/utils'
 import { z } from 'zod'
 
@@ -19,7 +19,7 @@ const IUser = z.object({
 
 const User = createEntity(IUser)
 
-const myUser = User.from({
+const myUser = new User({
   name: {
     first: 'John',
     last: 'Smith'
@@ -44,7 +44,7 @@ myUser.toJSON()
 
 ##### Advanced Example
 
-```
+```ts
 import { createEntity } from '@codling/utils'
 import { z } from 'zod'
 
@@ -62,7 +62,7 @@ class User extends createEntity(IUser) {
   }
 }
 
-const myUser = User.from({
+const myUser = new User({
   name: {
     first: 'John',
     last: 'Smith'
