@@ -14,17 +14,8 @@ describe('@codling/utils/entity/createEntity', function () {
   it('should create instance of class', function () {
     const Result = createEntity(schema);
     const instance = new Result({ foo: 'bar' });
-    // const instance = Result.from({ foo: 'bar' });
     this.assert.instanceOf(instance, Result);
   });
-
-  // it('should create multiple instance of class', function () {
-  //   const Result = createEntity(schema);
-  //   const instance = Result.from([{ foo: 'bar' }, { foo: 'bar' }]);
-  //   this.assert.isArray(instance);
-  //   this.assert.lengthOf(instance, 2);
-  //   this.assert.instanceOf(instance[0], Result);
-  // });
 
   it('should allow custom methods and subclassing', function () {
     const Item = createEntity(schema);
