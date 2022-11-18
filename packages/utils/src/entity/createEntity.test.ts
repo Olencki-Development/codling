@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import { createEntity, type EntityInstance } from './index.js';
+import { createEntity, type EntityInstance } from '.';
 
 describe('@codling/utils/entity/createEntity', function () {
   const schema = z.object({

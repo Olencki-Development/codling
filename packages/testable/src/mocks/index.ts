@@ -1,2 +1,2 @@
-export * from './complex.js';
-export * from './libs.js';
+export * from './complex';
+export * from './libs';

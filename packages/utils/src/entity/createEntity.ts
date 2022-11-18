@@ -1,5 +1,5 @@
 import type { EntityInstance, EntitySchema, EntityShape } from './types';
-import { EntityBaseImplied } from './EntityBase.js';
+import { EntityBaseImplied } from './EntityBase';
 
 type Entity<S extends EntitySchema> = EntityInstance<S>;
 type EntityClass<S extends EntitySchema> = {

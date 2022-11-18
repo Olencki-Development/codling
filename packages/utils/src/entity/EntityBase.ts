@@ -3,7 +3,7 @@ import {
   EntityShape,
   IEntityBase,
   EntityInstance,
-} from './types.js';
+} from './types';
 
 export class EntityBaseImplied<S extends EntitySchema>
   implements IEntityBase<S>

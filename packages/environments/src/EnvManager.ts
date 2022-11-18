@@ -7,7 +7,7 @@ import {
   Environments,
   EnvSchema,
   RequestEnvFunc,
-} from './types.js';
+} from './types';
 
 export class EnvManager<S extends ConfigSchema, E extends EnvSchema> {
   readonly environment: Environments;
