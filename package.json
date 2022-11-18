@@ -1,6 +1,7 @@
 {
   "name": "codling",
   "version": "1.0.0",
+  "type": "module",
   "description": "Monorepo for codling packages",
   "license": "MIT",
   "author": "Brian Olencki",

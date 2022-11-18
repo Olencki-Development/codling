@@ -1,6 +1,7 @@
 {
   "name": "@codling/environments",
   "version": "1.1.4",
+  "type": "module",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "license": "MIT",
@@ -14,7 +15,7 @@
     "build": "npm run clean && npm run compile",
     "clean": "rimraf dist && rimraf tsconfig.tsbuildinfo",
     "compile": "tsc --build",
-    "test": "mocha -r ts-node/register --project tsconfig.json \"./src/setup.test.ts\" \"./src/**/*.test.ts\"",
+    "test": "mocha --loader=ts-node/esm -r ts-node/register --project tsconfig.json \"./src/setup.test.ts\" \"./src/**/*.test.ts\"",
     "test:coverage": "nyc npm run test",
     "test:types": "tsc --noEmit"
   },

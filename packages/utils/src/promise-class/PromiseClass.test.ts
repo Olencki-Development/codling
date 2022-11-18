@@ -1,4 +1,4 @@
-import { PromiseClass } from './';
+import { PromiseClass } from './index.js';
 
 describe('@codling/utils/promise-class/PromiseClass', function () {
   class Item extends PromiseClass<number> {

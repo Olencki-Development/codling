@@ -1,4 +1,4 @@
-import { UseDefault } from '.';
+import { UseDefault } from './index.js';
 
 describe('@codling/utils/use-default/UseDefault', function () {
   class Item {

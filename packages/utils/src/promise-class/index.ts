@@ -1,1 +1,1 @@
-export { PromiseClass } from './PromiseClass';
+export { PromiseClass } from './PromiseClass.js';

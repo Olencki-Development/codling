@@ -1,4 +1,4 @@
-import Sinon = require('sinon');
+import * as sinon from 'sinon';
 
 /**
  * Generate a mock model for the service container
@@ -11,7 +11,7 @@ export function complexMock(
   methods: string[],
   result: any = {} // eslint-disable-line @typescript-eslint/no-explicit-any
 ) {
-  const item: Record<string, Sinon.SinonStub> = {};
+  const item: Record<string, sinon.SinonStub> = {};
 
   for (let index = 0; index < methods.length; index++) {
     const method = methods[index];
