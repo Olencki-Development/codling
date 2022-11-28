@@ -1,4 +1,4 @@
-import { EnvManager } from './index';
+import { EnvManager } from './index.js';
 import { z } from 'zod';
 
 describe('@codling/environments/EnvManager', function () {

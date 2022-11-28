@@ -1,7 +1,7 @@
 import * as sinon from 'sinon';
 import * as Chai from 'chai';
-import { ChaiAndSinonAssert } from './@types/mocha';
-import * as mocks from './mocks';
+import { ChaiAndSinonAssert } from './@types/mocha.js';
+import * as mocks from './mocks/index.js';
 
 export const chaiAndSinonAssert = sinon.assert.expose(Chai.assert, {
   prefix: '',
