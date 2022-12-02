@@ -1,5 +1,9 @@
 import type { z, SomeZodObject, ZodError } from 'zod';
 
+export type EntityOptions = {
+  shouldThrowOnInitialization: boolean;
+};
+
 export type EntitySchema = SomeZodObject;
 export type EntityInputShape<S extends EntitySchema> = z.input<S>;
 export type EntityOutputShape<S extends EntitySchema> = z.output<S>;

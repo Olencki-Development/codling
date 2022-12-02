@@ -1,9 +1,11 @@
+import { DEFAULT_ENTITY_OPTIONS } from './consts.js';
 import {
   EntitySchema,
   EntityInputShape,
   EntityOutputShape,
   IEntityBase,
   EntityInstance,
+  EntityOptions,
 } from './types.js';
 
 export class EntityBaseImplied<S extends EntitySchema>
@@ -11,11 +13,12 @@ export class EntityBaseImplied<S extends EntitySchema>
 {
   constructor(
     readonly schema: S,
-    readonly fields: EntityInputShape<S> | Record<string, never> = {}
+    readonly fields: EntityInputShape<S> | Record<string, never> = {},
+    readonly options: EntityOptions = DEFAULT_ENTITY_OPTIONS
   ) {
     if (Object.keys(fields).length) {
       Object.assign(this, fields);
-      this.validate(true);
+      this.validate(this.options.shouldThrowOnInitialization);
     }
   }
 

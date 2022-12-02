@@ -15,3 +15,5 @@
 **/.nyc_output/
 
 **/.serverless
+
+lerna-debug.log
