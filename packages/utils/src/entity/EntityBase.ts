@@ -16,8 +16,8 @@ export class EntityBaseImplied<S extends EntitySchema>
     readonly fields: EntityInputShape<S> | Record<string, never> = {},
     readonly options: EntityOptions = DEFAULT_ENTITY_OPTIONS
   ) {
-    if (Object.keys(fields).length) {
-      Object.assign(this, fields);
+    if (Object.keys(this.fields).length) {
+      Object.assign(this, this.fields);
       this.validate(this.options.shouldThrowOnInitialization);
     }
   }
@@ -70,7 +70,8 @@ export type EntityBase<S extends EntitySchema> = EntityInstance<
 export type EntityBaseClass = {
   new <S extends EntitySchema>(
     schema: S,
-    fields: EntityInputShape<S> | Record<string, never>
+    fields?: EntityInputShape<S> | Record<string, never>,
+    options?: EntityOptions
   ): EntityBase<S>;
 };
 export const EntityBase = EntityBaseImplied as EntityBaseClass;
