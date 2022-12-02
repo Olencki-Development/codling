@@ -1,13 +1,14 @@
 import type { z, SomeZodObject, ZodError } from 'zod';
 
 export type EntitySchema = SomeZodObject;
-export type EntityShape<S extends EntitySchema> = z.infer<S>;
+export type EntityInputShape<S extends EntitySchema> = z.input<S>;
+export type EntityOutputShape<S extends EntitySchema> = z.output<S>;
 
 export interface IEntityBase<S extends EntitySchema> {
-  readonly rawFields: EntityShape<S>;
-  readonly schema: EntityShape<S>;
+  readonly fields: EntityInputShape<S> | Record<string, never>;
+  readonly schema: S;
 
-  toJSON(): EntityShape<S>;
+  toJSON(): EntityOutputShape<S>;
   toString(): string;
   validate(shouldThrow: boolean): true | ZodError;
 }
@@ -15,4 +16,4 @@ export interface IEntityBase<S extends EntitySchema> {
 export type EntityInstance<
   S extends EntitySchema,
   T extends IEntityBase<S> = IEntityBase<S>
-> = EntityShape<S> & T;
+> = EntityOutputShape<S> & T;

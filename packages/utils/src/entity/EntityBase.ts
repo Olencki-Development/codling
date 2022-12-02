@@ -1,6 +1,7 @@
 import {
   EntitySchema,
-  EntityShape,
+  EntityInputShape,
+  EntityOutputShape,
   IEntityBase,
   EntityInstance,
 } from './types.js';
@@ -8,21 +9,21 @@ import {
 export class EntityBaseImplied<S extends EntitySchema>
   implements IEntityBase<S>
 {
-  /**
-   * Raw unmodified fields that were originally assigned.
-   */
-  readonly rawFields: EntityShape<S>;
-
-  constructor(fields: EntityShape<S>, readonly schema: S) {
-    this.rawFields = fields;
-    Object.assign(this, this.schema.parse(fields));
+  constructor(
+    readonly schema: S,
+    readonly fields: EntityInputShape<S> | Record<string, never> = {}
+  ) {
+    if (Object.keys(fields).length) {
+      Object.assign(this, fields);
+      this.validate(true);
+    }
   }
 
   /**
    * Convert the instance to a json object based on the schema values
    * @returns json object of the fields in the schema
    */
-  toJSON() {
+  toJSON(): EntityOutputShape<S> {
     return this.schema.parse(this);
   }
 
@@ -51,6 +52,10 @@ export class EntityBaseImplied<S extends EntitySchema>
       return result.error;
     }
 
+    if (result.success) {
+      Object.assign(this, result.data);
+    }
+
     return true;
   }
 }
@@ -61,8 +66,8 @@ export type EntityBase<S extends EntitySchema> = EntityInstance<
 >;
 export type EntityBaseClass = {
   new <S extends EntitySchema>(
-    fields: EntityShape<S>,
-    schema: S
+    schema: S,
+    fields: EntityInputShape<S> | Record<string, never>
   ): EntityBase<S>;
 };
 export const EntityBase = EntityBaseImplied as EntityBaseClass;

@@ -8,12 +8,9 @@ describe('@codling/utils/entity/EntityBase', function () {
   let instance: EntityBase<typeof schema>;
 
   beforeEach(function () {
-    instance = new EntityBase(
-      {
-        foo: 'bar',
-      },
-      schema
-    );
+    instance = new EntityBase(schema, {
+      foo: 'bar',
+    });
   });
 
   describe('toJSON', function () {
@@ -41,7 +38,6 @@ describe('@codling/utils/entity/EntityBase', function () {
 
   describe('validate', function () {
     it('should return true', function () {
-      // instance.foo = 'bubble' as any;
       this.assert.isTrue(instance.validate());
     });
 
