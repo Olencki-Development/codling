@@ -1,6 +1,6 @@
-import * as Chai from 'chai';
-import * as sinon from 'sinon';
-import * as mocks from '../mocks/index.js';
+import Chai from 'chai';
+import sinon from 'sinon';
+import mocks from '../mocks/index.js';
 import { Container } from '@halliganjs/service-container';
 
 export type ChaiAndSinonAssert = Chai.Assert & sinon.SinonAssert;

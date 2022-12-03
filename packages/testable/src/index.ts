@@ -1,5 +1,5 @@
-import * as sinon from 'sinon';
-import * as Chai from 'chai';
+import sinon from 'sinon';
+import Chai from 'chai';
 import { ChaiAndSinonAssert } from './@types/mocha.js';
 import * as mocks from './mocks/index.js';
 

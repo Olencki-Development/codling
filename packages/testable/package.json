@@ -21,12 +21,12 @@
   "dependencies": {
     "@halliganjs/service-container": "^1.1.3",
     "@types/chai": "^4.3.4",
-    "@types/mocha": "^9.1.1",
+    "@types/mocha": "^10.0.1",
     "@types/sinon": "^10.0.13",
     "chai": "^4.3.7",
-    "mocha": "^9.2.2",
+    "mocha": "^10.1.0",
     "nyc": "^15.1.0",
-    "sinon": "^13.0.2",
+    "sinon": "^15.0.0",
     "ts-node": "^10.9.1"
   },
   "gitHead": "ec773f4485119948b9389c597bdb0762a17155a7"
