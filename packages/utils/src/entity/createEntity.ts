@@ -10,7 +10,7 @@ import { DEFAULT_ENTITY_OPTIONS } from './consts.js';
 type Entity<S extends EntitySchema> = EntityInstance<S>;
 type EntityClass<S extends EntitySchema> = {
   new (): Entity<S>;
-  new (fields: EntityInputShape<S> | Record<string, never>): Entity<S>;
+  new (fields: EntityInputShape<S> | never): Entity<S>;
 };
 
 export function createEntity<S extends EntitySchema>(
@@ -18,7 +18,7 @@ export function createEntity<S extends EntitySchema>(
   entityOptions: EntityOptions = DEFAULT_ENTITY_OPTIONS
 ): EntityClass<S> {
   return class Entity extends EntityBaseImplied<S> {
-    constructor(fields: EntityInputShape<S> | Record<string, never> = {}) {
+    constructor(fields: EntityInputShape<S> | never = {}) {
       super(schema, fields, entityOptions);
     }
   };

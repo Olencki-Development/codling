@@ -10,11 +10,11 @@ export declare class EntityBaseImplied<S extends EntitySchema>
   implements IEntityBase<S>
 {
   readonly schema: S;
-  readonly fields: EntityInputShape<S> | Record<string, never>;
+  readonly fields: EntityInputShape<S> | never;
   readonly options: EntityOptions;
   constructor(
     schema: S,
-    fields?: EntityInputShape<S> | Record<string, never>,
+    fields?: EntityInputShape<S> | never,
     options?: EntityOptions
   );
   /**
@@ -42,7 +42,7 @@ export type EntityBase<S extends EntitySchema> = EntityInstance<
 export type EntityBaseClass = {
   new <S extends EntitySchema>(
     schema: S,
-    fields?: EntityInputShape<S> | Record<string, never>,
+    fields?: EntityInputShape<S> | never,
     options?: EntityOptions
   ): EntityBase<S>;
 };

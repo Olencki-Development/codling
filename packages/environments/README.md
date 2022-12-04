@@ -30,7 +30,7 @@ const localConfig: z.infer<typeof configSchema> = {
   }
 };
 
-const envManager = new EnvironmentManager(
+const envManager = new EnvManager(
   configSchema,
   envSchema,
   { local: localConfig },

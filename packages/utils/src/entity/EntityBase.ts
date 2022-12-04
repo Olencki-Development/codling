@@ -13,7 +13,7 @@ export class EntityBaseImplied<S extends EntitySchema>
 {
   constructor(
     readonly schema: S,
-    readonly fields: EntityInputShape<S> | Record<string, never> = {},
+    readonly fields: EntityInputShape<S> | never = {},
     readonly options: EntityOptions = DEFAULT_ENTITY_OPTIONS
   ) {
     if (Object.keys(this.fields).length) {
@@ -70,7 +70,7 @@ export type EntityBase<S extends EntitySchema> = EntityInstance<
 export type EntityBaseClass = {
   new <S extends EntitySchema>(
     schema: S,
-    fields?: EntityInputShape<S> | Record<string, never>,
+    fields?: EntityInputShape<S> | never,
     options?: EntityOptions
   ): EntityBase<S>;
 };
