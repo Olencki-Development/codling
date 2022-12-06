@@ -10,7 +10,7 @@ import { DEFAULT_ENTITY_OPTIONS } from './consts.js';
 type Entity<S extends EntitySchema> = EntityInstance<S>;
 type EntityClass<S extends EntitySchema> = {
   new (): Entity<S>;
-  new (fields: EntityInputShape<S> | never): Entity<S>;
+  new (fields: EntityInputShape<S>): Entity<S>;
 };
 
 export function createEntity<S extends EntitySchema>(
