@@ -1,8 +1,10 @@
-import type { z, SomeZodObject, ZodError } from 'zod';
+import type { z, SomeZodObject, ZodError, ZodIntersection } from 'zod';
 export type EntityOptions = {
   shouldThrowOnInitialization: boolean;
 };
-export type EntitySchema = SomeZodObject;
+export type EntitySchema =
+  | SomeZodObject
+  | ZodIntersection<SomeZodObject, SomeZodObject>;
 export type EntityInputShape<S extends EntitySchema> = z.input<S>;
 export type EntityOutputShape<S extends EntitySchema> = z.output<S>;
 export interface IEntityBase<S extends EntitySchema> {

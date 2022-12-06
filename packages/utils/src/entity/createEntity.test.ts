@@ -32,6 +32,31 @@ describe('@codling/utils/entity/createEntity', function () {
     });
   });
 
+  describe('input output ZodIntersect', function () {
+    const baseSchema = z.object({
+      foo: z.string(),
+      count: z.number(),
+      id: z.number(),
+    });
+    const schema = baseSchema
+      .pick({
+        id: true,
+      })
+      .and(
+        baseSchema
+          .omit({
+            foo: true,
+          })
+          .deepPartial()
+      );
+
+    it('should create instance of class', function () {
+      const Result = createEntity(schema);
+      const instance = new Result({ id: 4, count: 4 });
+      this.assert.instanceOf(instance, Result);
+    });
+  });
+
   describe('input output different', function () {
     const schema = z.object({
       count: z.preprocess((value) => {
