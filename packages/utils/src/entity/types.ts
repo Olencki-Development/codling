@@ -23,3 +23,5 @@ export type EntityInstance<
   S extends EntitySchema,
   T extends IEntityBase<S> = IEntityBase<S>
 > = EntityOutputShape<S> & T;
+
+export type SomeEntity = EntityInstance<EntitySchema>;
