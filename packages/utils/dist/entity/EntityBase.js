@@ -43,5 +43,13 @@ export class EntityBaseImplied {
     }
     return true;
   }
+  /**
+   * Clones the object using the json value to populate the clone
+   * @returns new instance of the class
+   */
+  clone() {
+    const EntityClassHelper = this.constructor;
+    return new EntityClassHelper(this.schema, this.toJSON(), this.options);
+  }
 }
 export const EntityBase = EntityBaseImplied;

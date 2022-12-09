@@ -51,4 +51,13 @@ describe('@codling/utils/entity/EntityBase', function () {
       this.assert.throws(() => instance.validate(true));
     });
   });
+
+  describe('clone', function () {
+    it('should return new instance', function () {
+      const instance2 = instance.clone();
+
+      this.assert.notEqual(instance, instance2);
+      this.assert.deepEqual(instance.toJSON(), instance2.toJSON());
+    });
+  });
 });

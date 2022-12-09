@@ -34,6 +34,11 @@ export declare class EntityBaseImplied<S extends EntitySchema>
    * @returns true
    */
   validate(shouldThrow?: boolean): true | import('zod').ZodError<any>;
+  /**
+   * Clones the object using the json value to populate the clone
+   * @returns new instance of the class
+   */
+  clone(): EntityBase<S>;
 }
 export type EntityBaseClass = {
   new <S extends EntitySchema>(

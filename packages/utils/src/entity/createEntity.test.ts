@@ -30,6 +30,24 @@ describe('@codling/utils/entity/createEntity', function () {
       const instance = new Result({ foo: 'bar' });
       this.assert.equal(instance.getFoo(), 'bar');
     });
+
+    describe('clone with inheritance', function () {
+      it('should return new instance with custom methods', function () {
+        const Item = createEntity(schema);
+        class Result extends Item {
+          getFoo(this: Entity<typeof schema>) {
+            return this.foo;
+          }
+        }
+
+        const instance = new Result({
+          foo: 'bar',
+        });
+        const instance2 = instance.clone();
+        this.assert.instanceOf(instance2, Result);
+        this.assert.notEqual(instance, instance2);
+      });
+    });
   });
 
   describe('input output ZodIntersect', function () {

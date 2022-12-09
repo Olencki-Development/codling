@@ -15,5 +15,9 @@ export function createEntity<S extends EntitySchema>(
     constructor(fields?: EntityInputShape<S> | undefined) {
       super(schema, fields, entityOptions);
     }
+
+    clone() {
+      return new (this.constructor as EntityClass<S>)(this.toJSON());
+    }
   };
 }

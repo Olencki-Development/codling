@@ -13,6 +13,7 @@ export interface IEntityBase<S extends EntitySchema> {
   toJSON(): EntityOutputShape<S>;
   toString(spacing?: number): string;
   validate(shouldThrow?: boolean): true | ZodError;
+  clone(): this;
 }
 export type Entity<S extends EntitySchema = EntitySchema> =
   EntityOutputShape<S> & IEntityBase<S>;
