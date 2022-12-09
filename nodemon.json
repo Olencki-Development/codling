@@ -1,0 +1,6 @@
+{
+  "watch": ["./packages/"],
+  "ext": "ts,json",
+  "ignore": ["./packages/**/dist/"],
+  "exec": "npm run build"
+}

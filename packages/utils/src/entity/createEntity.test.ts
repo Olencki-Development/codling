@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import { createEntity, type EntityInstance } from './index.js';
+import { createEntity, type Entity } from './index.js';
 
 describe('@codling/utils/entity/createEntity', function () {
   describe('input output same', function () {
@@ -22,7 +22,7 @@ describe('@codling/utils/entity/createEntity', function () {
     it('should allow custom methods and subclassing', function () {
       const Item = createEntity(schema);
       class Result extends Item {
-        getFoo(this: EntityInstance<typeof schema>) {
+        getFoo(this: Entity<typeof schema>) {
           return this.foo;
         }
       }

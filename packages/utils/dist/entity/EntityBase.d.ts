@@ -3,18 +3,18 @@ import {
   EntityInputShape,
   EntityOutputShape,
   IEntityBase,
-  EntityInstance,
   EntityOptions,
+  Entity,
 } from './types.js';
 export declare class EntityBaseImplied<S extends EntitySchema>
   implements IEntityBase<S>
 {
   readonly schema: S;
-  readonly fields: EntityInputShape<S> | never;
   readonly options: EntityOptions;
+  readonly fields: EntityInputShape<S> | Record<string, never>;
   constructor(
     schema: S,
-    fields?: EntityInputShape<S> | never,
+    fields: EntityInputShape<S> | undefined,
     options?: EntityOptions
   );
   /**
@@ -35,10 +35,6 @@ export declare class EntityBaseImplied<S extends EntitySchema>
    */
   validate(shouldThrow?: boolean): true | import('zod').ZodError<any>;
 }
-export type EntityBase<S extends EntitySchema> = EntityInstance<
-  S,
-  EntityBaseImplied<S>
->;
 export type EntityBaseClass = {
   new <S extends EntitySchema>(
     schema: S,
@@ -46,4 +42,5 @@ export type EntityBaseClass = {
     options?: EntityOptions
   ): EntityBase<S>;
 };
+export type EntityBase<S extends EntitySchema> = Entity<S>;
 export declare const EntityBase: EntityBaseClass;

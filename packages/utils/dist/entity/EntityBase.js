@@ -1,10 +1,10 @@
 import { DEFAULT_ENTITY_OPTIONS } from './consts.js';
 export class EntityBaseImplied {
-  constructor(schema, fields = {}, options = DEFAULT_ENTITY_OPTIONS) {
+  constructor(schema, fields, options = DEFAULT_ENTITY_OPTIONS) {
     this.schema = schema;
-    this.fields = fields;
     this.options = options;
-    if (Object.keys(this.fields).length) {
+    this.fields = fields ?? {};
+    if (fields) {
       Object.assign(this, this.fields);
       this.validate(this.options.shouldThrowOnInitialization);
     }

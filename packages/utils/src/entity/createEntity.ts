@@ -1,24 +1,18 @@
 import type {
-  EntityInstance,
   EntitySchema,
   EntityInputShape,
   EntityOptions,
+  EntityClass,
 } from './types.js';
 import { EntityBaseImplied } from './EntityBase.js';
 import { DEFAULT_ENTITY_OPTIONS } from './consts.js';
-
-type Entity<S extends EntitySchema> = EntityInstance<S>;
-type EntityClass<S extends EntitySchema> = {
-  new (): Entity<S>;
-  new (fields: EntityInputShape<S>): Entity<S>;
-};
 
 export function createEntity<S extends EntitySchema>(
   schema: S,
   entityOptions: EntityOptions = DEFAULT_ENTITY_OPTIONS
 ): EntityClass<S> {
   return class Entity extends EntityBaseImplied<S> {
-    constructor(fields: EntityInputShape<S> | never = {}) {
+    constructor(fields?: EntityInputShape<S> | undefined) {
       super(schema, fields, entityOptions);
     }
   };

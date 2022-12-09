@@ -1,5 +1,5 @@
 import { z, ZodError } from 'zod';
-import { EntityBase } from './index.js';
+import { EntityBase } from './EntityBase.js';
 
 describe('@codling/utils/entity/EntityBase', function () {
   const schema = z.object({

@@ -4,19 +4,22 @@ import {
   EntityInputShape,
   EntityOutputShape,
   IEntityBase,
-  EntityInstance,
   EntityOptions,
+  Entity,
 } from './types.js';
 
 export class EntityBaseImplied<S extends EntitySchema>
   implements IEntityBase<S>
 {
+  readonly fields: EntityInputShape<S> | Record<string, never>;
+
   constructor(
     readonly schema: S,
-    readonly fields: EntityInputShape<S> | never = {},
+    fields: EntityInputShape<S> | undefined,
     readonly options: EntityOptions = DEFAULT_ENTITY_OPTIONS
   ) {
-    if (Object.keys(this.fields).length) {
+    this.fields = fields ?? {};
+    if (fields) {
       Object.assign(this, this.fields);
       this.validate(this.options.shouldThrowOnInitialization);
     }
@@ -63,10 +66,6 @@ export class EntityBaseImplied<S extends EntitySchema>
   }
 }
 
-export type EntityBase<S extends EntitySchema> = EntityInstance<
-  S,
-  EntityBaseImplied<S>
->;
 export type EntityBaseClass = {
   new <S extends EntitySchema>(
     schema: S,
@@ -74,4 +73,5 @@ export type EntityBaseClass = {
     options?: EntityOptions
   ): EntityBase<S>;
 };
+export type EntityBase<S extends EntitySchema> = Entity<S>;
 export const EntityBase = EntityBaseImplied as EntityBaseClass;

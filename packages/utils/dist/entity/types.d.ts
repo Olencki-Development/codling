@@ -11,10 +11,22 @@ export interface IEntityBase<S extends EntitySchema> {
   readonly fields: EntityInputShape<S> | Record<string, never>;
   readonly schema: S;
   toJSON(): EntityOutputShape<S>;
-  toString(): string;
-  validate(shouldThrow: boolean): true | ZodError;
+  toString(spacing?: number): string;
+  validate(shouldThrow?: boolean): true | ZodError;
 }
-export type EntityInstance<
-  S extends EntitySchema,
-  T extends IEntityBase<S> = IEntityBase<S>
-> = EntityOutputShape<S> & T;
+export type Entity<S extends EntitySchema = EntitySchema> =
+  EntityOutputShape<S> & IEntityBase<S>;
+export type EntityClass<S extends EntitySchema> = {
+  new (): Entity<S>;
+  new (fields: EntityInputShape<S>): Entity<S>;
+};
+export declare namespace Entity {
+  type InferFields<
+    E extends Entity<S>,
+    S extends EntitySchema = EntitySchema
+  > = EntityOutputShape<E['schema']>;
+  type InferInputFields<
+    E extends Entity<S>,
+    S extends EntitySchema = EntitySchema
+  > = EntityInputShape<E['schema']>;
+}
