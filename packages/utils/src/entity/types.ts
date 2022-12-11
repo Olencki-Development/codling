@@ -16,7 +16,7 @@ export interface IEntityBase<S extends EntitySchema> {
 
   toJSON(): EntityOutputShape<S>;
   toString(spacing?: number): string;
-  validate(shouldThrow?: boolean): true | ZodError;
+  validate(shouldThrow?: boolean): undefined | ZodError;
   clone(): this;
 }
 

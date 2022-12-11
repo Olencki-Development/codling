@@ -62,7 +62,7 @@ export class EntityBaseImplied<S extends EntitySchema>
       Object.assign(this, result.data);
     }
 
-    return true;
+    return undefined;
   }
 
   /**

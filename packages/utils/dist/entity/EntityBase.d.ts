@@ -33,7 +33,7 @@ export declare class EntityBaseImplied<S extends EntitySchema>
    * @param shouldThrow throw an error if the validation fails (default false)
    * @returns true
    */
-  validate(shouldThrow?: boolean): true | import('zod').ZodError<any>;
+  validate(shouldThrow?: boolean): import('zod').ZodError<any> | undefined;
   /**
    * Clones the object using the json value to populate the clone
    * @returns new instance of the class

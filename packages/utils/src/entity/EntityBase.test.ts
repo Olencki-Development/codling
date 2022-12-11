@@ -37,8 +37,8 @@ describe('@codling/utils/entity/EntityBase', function () {
   });
 
   describe('validate', function () {
-    it('should return true', function () {
-      this.assert.isTrue(instance.validate());
+    it('should return undefined', function () {
+      this.assert.isUndefined(instance.validate());
     });
 
     it('should return errors', function () {

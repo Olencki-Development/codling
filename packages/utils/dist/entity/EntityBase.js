@@ -41,7 +41,7 @@ export class EntityBaseImplied {
     if (result.success) {
       Object.assign(this, result.data);
     }
-    return true;
+    return undefined;
   }
   /**
    * Clones the object using the json value to populate the clone
