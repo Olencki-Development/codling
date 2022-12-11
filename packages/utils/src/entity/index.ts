@@ -3,6 +3,6 @@ export {
   Entity,
   EntityClass,
   EntityInputShape,
-  EntityOutputShape,
+  EntityShape,
   EntitySchema,
 } from './types.js';

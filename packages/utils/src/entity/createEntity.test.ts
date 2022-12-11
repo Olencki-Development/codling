@@ -99,8 +99,32 @@ describe('@codling/utils/entity/createEntity', function () {
     it('should create instance of class', function () {
       const Result = createEntity(schema);
       const instance = new Result({ count: '4', name: 'John smith' });
+      instance.validate();
       this.assert.isNumber(instance.count);
       this.assert.hasAllKeys(instance.name, ['first', 'last']);
+      this.assert.instanceOf(instance, Result);
+    });
+
+    it('should create empty instance of class', function () {
+      const Result = createEntity(schema);
+      const instance = new Result();
+      this.assert.isUndefined(instance.count);
+      this.assert.instanceOf(instance, Result);
+    });
+  });
+
+  describe('input output custom input', function () {
+    const schema = z.object({
+      count: z.number().default(0),
+      name: z.string(),
+    });
+
+    it('should create instance of class', function () {
+      const Result = createEntity<typeof schema, { foo: 'bar' }>(schema);
+      const instance = new Result({ foo: 'bar' });
+      this.assert.isUndefined(instance.count);
+      this.assert.isUndefined(instance.name);
+      this.assert.deepEqual(instance.initialValues, { foo: 'bar' });
       this.assert.instanceOf(instance, Result);
     });
 

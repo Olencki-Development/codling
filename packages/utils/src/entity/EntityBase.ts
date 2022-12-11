@@ -1,27 +1,30 @@
+import { ZodError } from 'zod';
 import { DEFAULT_ENTITY_OPTIONS } from './consts.js';
 import {
+  AnyObject,
   EntitySchema,
   EntityInputShape,
-  EntityOutputShape,
+  EntityShape,
   IEntityBase,
   EntityOptions,
   Entity,
 } from './types.js';
 
-export class EntityBaseImplied<S extends EntitySchema>
-  implements IEntityBase<S>
+export class EntityBaseImplied<
+  ValidationSchema extends EntitySchema,
+  Input extends AnyObject = EntityInputShape<ValidationSchema>
+> implements IEntityBase<ValidationSchema, Input>
 {
-  readonly fields: EntityInputShape<S> | Record<string, never>;
+  readonly initialValues: Input | Record<string, never>;
 
   constructor(
-    readonly schema: S,
-    fields: EntityInputShape<S> | undefined,
+    readonly schema: ValidationSchema,
+    fields: Input | undefined,
     readonly options: EntityOptions = DEFAULT_ENTITY_OPTIONS
   ) {
-    this.fields = fields ?? {};
+    this.initialValues = fields ?? {};
     if (fields) {
-      Object.assign(this, this.fields);
-      this.validate(this.options.shouldThrowOnInitialization);
+      Object.assign(this, this.initialValues);
     }
   }
 
@@ -29,7 +32,7 @@ export class EntityBaseImplied<S extends EntitySchema>
    * Convert the instance to a json object based on the schema values
    * @returns json object of the fields in the schema
    */
-  toJSON(): EntityOutputShape<S> {
+  toJSON(): EntityShape<ValidationSchema> {
     return this.schema.parse(this);
   }
 
@@ -45,16 +48,11 @@ export class EntityBaseImplied<S extends EntitySchema>
 
   /**
    * Validate the instance against the schema
-   * @param shouldThrow throw an error if the validation fails (default false)
    * @returns true
    */
-  validate(shouldThrow = false) {
+  validate(): undefined | ZodError {
     const result = this.schema.safeParse(this);
     if (!result.success && result.error) {
-      if (shouldThrow) {
-        throw result.error;
-      }
-
       return result.error;
     }
 

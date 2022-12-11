@@ -1,27 +1,31 @@
+import { ZodError } from 'zod';
 import {
+  AnyObject,
   EntitySchema,
   EntityInputShape,
-  EntityOutputShape,
+  EntityShape,
   IEntityBase,
   EntityOptions,
   Entity,
 } from './types.js';
-export declare class EntityBaseImplied<S extends EntitySchema>
-  implements IEntityBase<S>
+export declare class EntityBaseImplied<
+  ValidationSchema extends EntitySchema,
+  Input extends AnyObject = EntityInputShape<ValidationSchema>
+> implements IEntityBase<ValidationSchema, Input>
 {
-  readonly schema: S;
+  readonly schema: ValidationSchema;
   readonly options: EntityOptions;
-  readonly fields: EntityInputShape<S> | Record<string, never>;
+  readonly initialValues: Input | Record<string, never>;
   constructor(
-    schema: S,
-    fields: EntityInputShape<S> | undefined,
+    schema: ValidationSchema,
+    fields: Input | undefined,
     options?: EntityOptions
   );
   /**
    * Convert the instance to a json object based on the schema values
    * @returns json object of the fields in the schema
    */
-  toJSON(): EntityOutputShape<S>;
+  toJSON(): EntityShape<ValidationSchema>;
   /**
    * Return a stringified json object
    * @param spacing number of spacing for fields in the json
@@ -30,15 +34,14 @@ export declare class EntityBaseImplied<S extends EntitySchema>
   toString(spacing?: number): string;
   /**
    * Validate the instance against the schema
-   * @param shouldThrow throw an error if the validation fails (default false)
    * @returns true
    */
-  validate(shouldThrow?: boolean): import('zod').ZodError<any> | undefined;
+  validate(): undefined | ZodError;
   /**
    * Clones the object using the json value to populate the clone
    * @returns new instance of the class
    */
-  clone(): EntityBase<S>;
+  clone(): EntityBase<ValidationSchema>;
 }
 export type EntityBaseClass = {
   new <S extends EntitySchema>(

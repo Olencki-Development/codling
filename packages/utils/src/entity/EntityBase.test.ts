@@ -13,6 +13,28 @@ describe('@codling/utils/entity/EntityBase', function () {
     });
   });
 
+  describe('constructor', function () {
+    it('should create instance with type as schema with payload', function () {
+      const instance = new EntityBase<typeof schema>(schema, {
+        foo: 'bar',
+      });
+
+      this.assert.instanceOf(instance, EntityBase);
+      this.assert.deepEqual(instance.initialValues, {
+        foo: 'bar',
+      });
+      this.assert.equal(instance.foo, 'bar');
+    });
+
+    it('should create instance with type as schema without payload', function () {
+      const instance = new EntityBase<typeof schema>(schema);
+
+      this.assert.instanceOf(instance, EntityBase);
+      this.assert.deepEqual(instance.initialValues, {});
+      this.assert.equal(instance.foo, undefined);
+    });
+  });
+
   describe('toJSON', function () {
     it('should return object of fields based on schema', function () {
       const json = instance.toJSON();
@@ -44,11 +66,6 @@ describe('@codling/utils/entity/EntityBase', function () {
     it('should return errors', function () {
       instance.foo = 'bubble' as any;
       this.assert.instanceOf(instance.validate(), ZodError);
-    });
-
-    it('should should throw', function () {
-      instance.foo = 'bubble' as any;
-      this.assert.throws(() => instance.validate(true));
     });
   });
 

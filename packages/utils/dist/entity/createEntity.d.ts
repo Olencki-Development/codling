@@ -1,5 +1,14 @@
-import type { EntitySchema, EntityOptions, EntityClass } from './types.js';
-export declare function createEntity<S extends EntitySchema>(
-  schema: S,
+import type {
+  EntitySchema,
+  EntityInputShape,
+  EntityOptions,
+  EntityClass,
+  AnyObject,
+} from './types.js';
+export declare function createEntity<
+  ValidationSchema extends EntitySchema,
+  Input extends AnyObject = EntityInputShape<ValidationSchema>
+>(
+  schema: ValidationSchema,
   entityOptions?: EntityOptions
-): EntityClass<S>;
+): EntityClass<ValidationSchema, Input>;

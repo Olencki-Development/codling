@@ -1,33 +1,28 @@
 import type { z, SomeZodObject, ZodError, ZodIntersection } from 'zod';
-export type EntityOptions = {
-  shouldThrowOnInitialization: boolean;
-};
+export type EntityOptions = Record<string, never>;
+export type AnyObject = Record<string, unknown>;
 export type EntitySchema =
   | SomeZodObject
   | ZodIntersection<SomeZodObject, SomeZodObject>;
+export type EntityShape<S extends EntitySchema> = z.output<S>;
 export type EntityInputShape<S extends EntitySchema> = z.input<S>;
-export type EntityOutputShape<S extends EntitySchema> = z.output<S>;
-export interface IEntityBase<S extends EntitySchema> {
-  readonly fields: EntityInputShape<S> | Record<string, never>;
-  readonly schema: S;
-  toJSON(): EntityOutputShape<S>;
+export interface IEntityBase<
+  ValidationSchema extends EntitySchema,
+  Input extends AnyObject = EntityInputShape<ValidationSchema>
+> {
+  readonly initialValues: Input | Record<string, never>;
+  readonly schema: ValidationSchema;
+  toJSON(): EntityShape<ValidationSchema>;
   toString(spacing?: number): string;
-  validate(shouldThrow?: boolean): undefined | ZodError;
+  validate(): undefined | ZodError;
   clone(): this;
 }
-export type Entity<S extends EntitySchema = EntitySchema> =
-  EntityOutputShape<S> & IEntityBase<S>;
-export type EntityClass<S extends EntitySchema> = {
-  new (): Entity<S>;
-  new (fields: EntityInputShape<S>): Entity<S>;
+export type Entity<S extends EntitySchema = EntitySchema> = EntityShape<S> &
+  IEntityBase<S>;
+export type EntityClass<
+  ValidationSchema extends EntitySchema,
+  InputShape extends AnyObject = EntityInputShape<ValidationSchema>
+> = {
+  new (): Entity<ValidationSchema>;
+  new (fields: InputShape): Entity<ValidationSchema>;
 };
-export declare namespace Entity {
-  type InferFields<
-    E extends Entity<S>,
-    S extends EntitySchema = EntitySchema
-  > = EntityOutputShape<E['schema']>;
-  type InferInputFields<
-    E extends Entity<S>,
-    S extends EntitySchema = EntitySchema
-  > = EntityInputShape<E['schema']>;
-}

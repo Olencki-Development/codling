@@ -3,10 +3,9 @@ export class EntityBaseImplied {
   constructor(schema, fields, options = DEFAULT_ENTITY_OPTIONS) {
     this.schema = schema;
     this.options = options;
-    this.fields = fields ?? {};
+    this.initialValues = fields ?? {};
     if (fields) {
-      Object.assign(this, this.fields);
-      this.validate(this.options.shouldThrowOnInitialization);
+      Object.assign(this, this.initialValues);
     }
   }
   /**
@@ -27,15 +26,11 @@ export class EntityBaseImplied {
   }
   /**
    * Validate the instance against the schema
-   * @param shouldThrow throw an error if the validation fails (default false)
    * @returns true
    */
-  validate(shouldThrow = false) {
+  validate() {
     const result = this.schema.safeParse(this);
     if (!result.success && result.error) {
-      if (shouldThrow) {
-        throw result.error;
-      }
       return result.error;
     }
     if (result.success) {
