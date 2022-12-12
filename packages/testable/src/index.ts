@@ -1,6 +1,6 @@
 import sinon from 'sinon';
 import Chai from 'chai';
-import { ChaiAndSinonAssert } from './@types/mocha.js';
+import type { ChaiAndSinonAssert } from './@types/mocha.js';
 import * as mocks from './mocks/index.js';
 
 export const chaiAndSinonAssert = sinon.assert.expose(Chai.assert, {

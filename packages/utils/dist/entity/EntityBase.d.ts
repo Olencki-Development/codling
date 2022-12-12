@@ -1,5 +1,5 @@
-import { ZodError } from 'zod';
-import {
+import type { ZodError } from 'zod';
+import type {
   AnyObject,
   EntitySchema,
   EntityInputShape,

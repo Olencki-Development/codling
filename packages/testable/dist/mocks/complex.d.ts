@@ -1,4 +1,4 @@
-import * as sinon from 'sinon';
+import type * as sinon from 'sinon';
 /**
  * Generate a mock model for the service container
  * @param  methods array of strings that represent methods that should be mocked in order

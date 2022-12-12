@@ -1,6 +1,6 @@
-import { ZodError } from 'zod';
+import type { ZodError } from 'zod';
 import { DEFAULT_ENTITY_OPTIONS } from './consts.js';
-import {
+import type {
   AnyObject,
   EntitySchema,
   EntityInputShape,
