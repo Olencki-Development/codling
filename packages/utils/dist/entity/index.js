@@ -1,2 +1,1 @@
-export { createEntity } from './createEntity.js';
-export {} from './types.js';
+export { createEntity } from './createEntity/index.js';

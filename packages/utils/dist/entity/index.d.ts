@@ -1,8 +1,2 @@
-export { createEntity } from './createEntity.js';
-export {
-  Entity,
-  EntityClass,
-  EntityInputShape,
-  EntityShape,
-  EntitySchema,
-} from './types.js';
+export { createEntity } from './createEntity/index.js';
+export type { Entity } from './EntityBase/index.js';

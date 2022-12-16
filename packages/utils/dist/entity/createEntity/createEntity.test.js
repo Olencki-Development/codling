@@ -109,7 +109,6 @@ describe('@codling/utils/entity/createEntity', function () {
       const instance = new Result({ foo: 'bar' });
       this.assert.isUndefined(instance.count);
       this.assert.isUndefined(instance.name);
-      this.assert.deepEqual(instance.initialValues, { foo: 'bar' });
       this.assert.instanceOf(instance, Result);
     });
     it('should create empty instance of class', function () {

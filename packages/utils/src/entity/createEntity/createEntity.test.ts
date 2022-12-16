@@ -1,5 +1,6 @@
 import { z } from 'zod';
-import { createEntity, type Entity } from './index.js';
+import { createEntity } from './index.js';
+import type { Entity } from '../index.js';
 
 describe('@codling/utils/entity/createEntity', function () {
   describe('input output same', function () {
@@ -22,7 +23,7 @@ describe('@codling/utils/entity/createEntity', function () {
     it('should allow custom methods and subclassing', function () {
       const Item = createEntity(schema);
       class Result extends Item {
-        getFoo(this: Entity<typeof schema>) {
+        getFoo(this: Entity.Instance<typeof schema>) {
           return this.foo;
         }
       }
@@ -35,7 +36,7 @@ describe('@codling/utils/entity/createEntity', function () {
       it('should return new instance with custom methods', function () {
         const Item = createEntity(schema);
         class Result extends Item {
-          getFoo(this: Entity<typeof schema>) {
+          getFoo(this: Entity.Instance<typeof schema>) {
             return this.foo;
           }
         }
@@ -124,7 +125,6 @@ describe('@codling/utils/entity/createEntity', function () {
       const instance = new Result({ foo: 'bar' });
       this.assert.isUndefined(instance.count);
       this.assert.isUndefined(instance.name);
-      this.assert.deepEqual(instance.initialValues, { foo: 'bar' });
       this.assert.instanceOf(instance, Result);
     });
 
