@@ -3,6 +3,7 @@
     "baseUrl": "./packages",
     "paths": {
       "@codling/environments": ["environments/src/*"],
+      "@codling/network": ["network/src/*"],
       "@codline/testable": ["testable/src/*"],
       "@codling/utils": ["utils/src/*"]
     }

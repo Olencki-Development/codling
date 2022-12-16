@@ -23,7 +23,7 @@
     "@codling/testable": "*"
   },
   "dependencies": {
-    "zod": "^3.19.1"
+    "zod": "^3.20.2"
   },
   "gitHead": "ec773f4485119948b9389c597bdb0762a17155a7"
 }
