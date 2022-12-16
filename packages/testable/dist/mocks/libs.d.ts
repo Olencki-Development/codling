@@ -1,4 +1,3 @@
-/// <reference types="sinon" />
 /**
  * Generate a mock fetch for use with the service container
  * @param  result return result from the mocked fetch

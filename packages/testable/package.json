@@ -12,8 +12,9 @@
     "url": "git+https://github.com/Olencki-Development/codling.git"
   },
   "scripts": {
-    "build": "npm run clean && npm run compile",
+    "build": "npm run clean && npm run compile && npm run build:hydrate-types",
     "clean": "rimraf dist && rimraf tsconfig.tsbuildinfo",
+    "build:hydrate-types": "cp -R src/@types dist",
     "compile": "tsc --build",
     "test": "echo 'no test'",
     "test:types": "tsc --noEmit"
@@ -24,9 +25,9 @@
     "@types/mocha": "^10.0.1",
     "@types/sinon": "^10.0.13",
     "chai": "^4.3.7",
-    "mocha": "^10.1.0",
+    "mocha": "^10.2.0",
     "nyc": "^15.1.0",
-    "sinon": "^15.0.0",
+    "sinon": "^15.0.1",
     "ts-node": "^10.9.1"
   },
   "gitHead": "ec773f4485119948b9389c597bdb0762a17155a7"
