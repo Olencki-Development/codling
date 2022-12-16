@@ -1,38 +1,46 @@
 import { z } from 'zod';
 import { createEntity } from './index.js';
+import type { Entity } from '../index.js';
+
 describe('@codling/utils/entity/createEntity', function () {
   describe('input output same', function () {
     const schema = z.object({
       foo: z.literal('bar'),
     });
+
     it('should create instance of class', function () {
       const Result = createEntity(schema);
       const instance = new Result({ foo: 'bar' });
       this.assert.instanceOf(instance, Result);
     });
+
     it('should create empty instance of class', function () {
       const Result = createEntity(schema);
       const instance = new Result();
       this.assert.instanceOf(instance, Result);
     });
+
     it('should allow custom methods and subclassing', function () {
       const Item = createEntity(schema);
       class Result extends Item {
-        getFoo() {
+        getFoo(this: Entity.Instance<typeof schema>) {
           return this.foo;
         }
       }
+
       const instance = new Result({ foo: 'bar' });
       this.assert.equal(instance.getFoo(), 'bar');
     });
+
     describe('clone with inheritance', function () {
       it('should return new instance with custom methods', function () {
         const Item = createEntity(schema);
         class Result extends Item {
-          getFoo() {
+          getFoo(this: Entity.Instance<typeof schema>) {
             return this.foo;
           }
         }
+
         const instance = new Result({
           foo: 'bar',
         });
@@ -42,6 +50,7 @@ describe('@codling/utils/entity/createEntity', function () {
       });
     });
   });
+
   describe('input output ZodIntersect', function () {
     const baseSchema = z.object({
       foo: z.string(),
@@ -59,12 +68,14 @@ describe('@codling/utils/entity/createEntity', function () {
           })
           .deepPartial()
       );
+
     it('should create instance of class', function () {
       const Result = createEntity(schema);
       const instance = new Result({ id: 4, count: 4 });
       this.assert.instanceOf(instance, Result);
     });
   });
+
   describe('input output different', function () {
     const schema = z.object({
       count: z.preprocess((value) => {
@@ -81,16 +92,42 @@ describe('@codling/utils/entity/createEntity', function () {
             last,
           };
         }
+
         return value;
       }),
     });
+
     it('should create instance of class', function () {
       const Result = createEntity(schema);
       const instance = new Result({ count: '4', name: 'John smith' });
+      instance.validate();
       this.assert.isNumber(instance.count);
       this.assert.hasAllKeys(instance.name, ['first', 'last']);
       this.assert.instanceOf(instance, Result);
     });
+
+    it('should create empty instance of class', function () {
+      const Result = createEntity(schema);
+      const instance = new Result();
+      this.assert.isUndefined(instance.count);
+      this.assert.instanceOf(instance, Result);
+    });
+  });
+
+  describe('input output custom input', function () {
+    const schema = z.object({
+      count: z.number().default(0),
+      name: z.string(),
+    });
+
+    it('should create instance of class', function () {
+      const Result = createEntity<typeof schema, { foo: 'bar' }>(schema);
+      const instance = new Result({ foo: 'bar' });
+      this.assert.isUndefined(instance.count);
+      this.assert.isUndefined(instance.name);
+      this.assert.instanceOf(instance, Result);
+    });
+
     it('should create empty instance of class', function () {
       const Result = createEntity(schema);
       const instance = new Result();

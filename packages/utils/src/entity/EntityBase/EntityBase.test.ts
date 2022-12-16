@@ -1,5 +1,5 @@
 import { z, ZodError } from 'zod';
-import { EntityBase } from './EntityBase.js';
+import { EntityBase } from './index.js';
 
 describe('@codling/utils/entity/EntityBase', function () {
   const schema = z.object({
@@ -10,6 +10,24 @@ describe('@codling/utils/entity/EntityBase', function () {
   beforeEach(function () {
     instance = new EntityBase(schema, {
       foo: 'bar',
+    });
+  });
+
+  describe('constructor', function () {
+    it('should create instance with type as schema with payload', function () {
+      const instance = new EntityBase<typeof schema>(schema, {
+        foo: 'bar',
+      });
+
+      this.assert.instanceOf(instance, EntityBase);
+      this.assert.equal(instance.foo, 'bar');
+    });
+
+    it('should create instance with type as schema without payload', function () {
+      const instance = new EntityBase<typeof schema>(schema);
+
+      this.assert.instanceOf(instance, EntityBase);
+      this.assert.equal(instance.foo, undefined);
     });
   });
 
@@ -44,11 +62,6 @@ describe('@codling/utils/entity/EntityBase', function () {
     it('should return errors', function () {
       instance.foo = 'bubble' as any;
       this.assert.instanceOf(instance.validate(), ZodError);
-    });
-
-    it('should should throw', function () {
-      instance.foo = 'bubble' as any;
-      this.assert.throws(() => instance.validate(true));
     });
   });
 

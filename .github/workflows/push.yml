@@ -1,0 +1,49 @@
+name: On push to any branch
+
+on: push
+
+env:
+  NODE_VERSION: 16.x
+
+jobs:
+  unit_tests:
+    runs-on: ubuntu-latest
+
+    steps:
+    # Clone the branch
+    - uses: actions/checkout@v2
+
+    # Set up NodeJS with the specific version specified by the env
+    - uses: actions/setup-node@v1
+      with:
+        node-version: ${{ env.NODE_VERSION }}
+
+    # Install dependencies
+    - run: npm install
+
+    # Build local dependencies
+    - run: npm run build
+
+    # Run the unit tests
+    - run: npm run test
+
+  type_check:
+    runs-on: ubuntu-latest
+
+    steps:
+    # Clone the branch
+    - uses: actions/checkout@v2
+
+    # Set up NodeJS with the specific version specified by the env
+    - uses: actions/setup-node@v1
+      with:
+        node-version: ${{ env.NODE_VERSION }}
+
+    # Install dependencies
+    - run: npm install
+
+    # Build local dependencies
+    - run: npm run build
+    
+    # Run the type checking with typescript
+    - run: npm run test:types

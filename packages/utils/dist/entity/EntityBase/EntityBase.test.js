@@ -1,5 +1,5 @@
 import { z, ZodError } from 'zod';
-import { EntityBase } from './EntityBase.js';
+import { EntityBase } from './index.js';
 describe('@codling/utils/entity/EntityBase', function () {
   const schema = z.object({
     foo: z.literal('bar'),
@@ -8,6 +8,20 @@ describe('@codling/utils/entity/EntityBase', function () {
   beforeEach(function () {
     instance = new EntityBase(schema, {
       foo: 'bar',
+    });
+  });
+  describe('constructor', function () {
+    it('should create instance with type as schema with payload', function () {
+      const instance = new EntityBase(schema, {
+        foo: 'bar',
+      });
+      this.assert.instanceOf(instance, EntityBase);
+      this.assert.equal(instance.foo, 'bar');
+    });
+    it('should create instance with type as schema without payload', function () {
+      const instance = new EntityBase(schema);
+      this.assert.instanceOf(instance, EntityBase);
+      this.assert.equal(instance.foo, undefined);
     });
   });
   describe('toJSON', function () {
@@ -31,16 +45,12 @@ describe('@codling/utils/entity/EntityBase', function () {
     });
   });
   describe('validate', function () {
-    it('should return true', function () {
-      this.assert.isTrue(instance.validate());
+    it('should return undefined', function () {
+      this.assert.isUndefined(instance.validate());
     });
     it('should return errors', function () {
       instance.foo = 'bubble';
       this.assert.instanceOf(instance.validate(), ZodError);
-    });
-    it('should should throw', function () {
-      instance.foo = 'bubble';
-      this.assert.throws(() => instance.validate(true));
     });
   });
   describe('clone', function () {
