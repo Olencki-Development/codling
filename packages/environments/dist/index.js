@@ -1,1 +1,1 @@
-export {};
+export { makeConfig } from './config.js';
