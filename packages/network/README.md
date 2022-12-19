@@ -6,5 +6,14 @@
 ##### Basic Example
 
 ```
-// TODO: create the client example
+import { processRequestToJSON } from '@codling/network'
+
+type User = {
+  name: string;
+  age: number;
+}
+
+const request = fetch('/users')
+const json = processRequestToJSON<User[]>(request);
+
 ```
