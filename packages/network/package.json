@@ -1,0 +1,28 @@
+{
+  "name": "@codling/network",
+  "version": "2.5.0",
+  "type": "module",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "license": "MIT",
+  "author": "Brian Olencki",
+  "homepage": "https://github.com/Olencki-Development/codling#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Olencki-Development/codling.git"
+  },
+  "scripts": {
+    "build": "npm run clean && npm run compile",
+    "clean": "rimraf dist && rimraf tsconfig.tsbuildinfo",
+    "compile": "tsc --build",
+    "test": "mocha --loader=ts-node/esm -r ts-node/register --project tsconfig.json \"./src/setup.test.ts\" \"./src/**/*.test.ts\"",
+    "test:coverage": "nyc npm run test",
+    "test:types": "tsc --noEmit"
+  },
+  "devDependencies": {
+    "@codling/testable": "*"
+  },
+  "dependencies": {
+    "@codling/utils": "*"
+  }
+}
