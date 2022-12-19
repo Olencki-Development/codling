@@ -1,2 +1,2 @@
-export * from './types.js';
-export { EnvManager } from './EnvManager.js';
+export type { Environments } from './types.js';
+export { makeConfig } from './config.js';
