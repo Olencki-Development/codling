@@ -16,19 +16,17 @@ describe('@codling/environments/ConfigBuilder', function () {
     it('should return instance with properties set', function () {
       const instance = new ConfigBuilder({
         envSchema,
-        envs: {
-          username: 'username',
-          password: 'password',
-        },
+        envs: this.mocks.zodType(envSchema),
         configSchema,
         registeredConfigs: {} as never,
       });
       this.assert.instanceOf(instance, ConfigBuilder);
-      this.assert.containsAllKeys(instance, [
+      this.assert.containsAllKeys(instance, ['options']);
+      this.assert.containsAllKeys(instance.options, [
         'envs',
-        '_envSchema',
-        '_configSchema',
-        '_registeredConfigs',
+        'envSchema',
+        'configSchema',
+        'registeredConfigs',
       ]);
     });
 
@@ -37,10 +35,7 @@ describe('@codling/environments/ConfigBuilder', function () {
       beforeEach(function () {
         instance = new ConfigBuilder({
           envSchema,
-          envs: {
-            username: 'username',
-            password: 'password',
-          },
+          envs: this.mocks.zodType(envSchema),
           configSchema,
           registeredConfigs: {},
         });
@@ -73,6 +68,7 @@ describe('@codling/environments/ConfigBuilder', function () {
 
         this.assert.hasAllKeys(nextConfig.options.registeredConfigs, [
           'development',
+          'local',
         ]);
         this.assert.isFunction(
           nextConfig.options.registeredConfigs.development

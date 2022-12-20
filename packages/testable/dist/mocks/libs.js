@@ -3,7 +3,7 @@
  * @param  result return result from the mocked fetch
  * @return        constructed fetch mock
  */
-export function fetchMock(
+export const fetchMock = function (
   result = {}, // eslint-disable-line @typescript-eslint/no-explicit-any
   status = 200
 ) {
@@ -14,4 +14,4 @@ export function fetchMock(
     text: this.sinon.stub().returns(JSON.stringify(result)),
   });
   return fetch;
-}
+};

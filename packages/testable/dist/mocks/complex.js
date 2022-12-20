@@ -4,7 +4,7 @@
  * @param  result  return result from the last item
  * @return         constructed complex mock
  */
-export function complexMock(
+export const complexMock = function (
   methods,
   result = {} // eslint-disable-line @typescript-eslint/no-explicit-any
 ) {
@@ -19,4 +19,4 @@ export function complexMock(
     }
   }
   return item;
-}
+};

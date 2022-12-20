@@ -6,7 +6,7 @@ import type * as sinon from 'sinon';
  * @param  result  return result from the last item
  * @return         constructed complex mock
  */
-export function complexMock(
+export const complexMock: Mocha.Context['mocks']['complex'] = function (
   this: Mocha.Context,
   methods: string[],
   result: any = {} // eslint-disable-line @typescript-eslint/no-explicit-any
@@ -25,4 +25,4 @@ export function complexMock(
   }
 
   return item;
-}
+};
