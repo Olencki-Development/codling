@@ -4,19 +4,13 @@
  * @param  result  return result from the last item
  * @return         constructed complex mock
  */
-export const complexMock = function (
-  methods,
-  result = {} // eslint-disable-line @typescript-eslint/no-explicit-any
-) {
-  const item = {};
-  for (let index = 0; index < methods.length; index++) {
-    const method = methods[index];
-    // Last item should return the result
-    if (index >= methods.length - 1) {
-      item[method] = this.sinon.stub().returns(result);
+export const getComplexMock = function (methods, result) {
+  return methods.reduce((output, methodName, index, array) => {
+    if (index >= array.length - 1) {
+      output[methodName] = this.sinon.stub().returns(result);
     } else {
-      item[method] = this.sinon.stub().returns(item);
+      output[methodName] = this.sinon.stub().returns(output);
     }
-  }
-  return item;
+    return output;
+  }, {});
 };

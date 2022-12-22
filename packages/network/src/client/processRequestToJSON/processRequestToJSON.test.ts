@@ -29,7 +29,9 @@ describe('@codling/network/processRequestToJSON', function () {
       const result = await safeProcessRequestToJSON(fetch());
       this.assert.deepEqual(result, {
         success: false,
-        error: new Error('[undefined] failed with status [400]'),
+        error: new Error(
+          '[http://test.local:1234/mock] failed with status [400]'
+        ),
       });
     });
 

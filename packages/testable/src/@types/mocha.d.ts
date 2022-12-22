@@ -1,22 +1,19 @@
-import Chai from 'chai';
-import sinon from 'sinon';
-import mocks from '../mocks/index.js';
-import { Container } from '@halliganjs/service-container';
-import { generateMock } from '@anatine/zod-mock';
+import type Chai from 'chai';
 import type Sinon from 'sinon';
+import type { Container } from '@halliganjs/service-container';
+import type { generateMock } from '@anatine/zod-mock';
+import type { GetComplexMock } from '../mocks/complex.js';
+import type { GetFetchMock } from '../mocks/fetch.js';
 
-export type ChaiAndSinonAssert = Chai.Assert & sinon.SinonAssert;
+export type ChaiAndSinonAssert = Chai.Assert & Sinon.SinonAssert;
 
 declare module 'mocha' {
   export interface Context {
     assert: ChaiAndSinonAssert;
-    sinon: sinon.SinonStatic;
+    sinon: Sinon.SinonStatic;
     mocks: {
-      complex: (
-        methods: string[],
-        result?: any
-      ) => Record<string, sinon.SinonStub>;
-      fetch: (result?: any, status?: number) => Sinon.SinonStub<any[], any>;
+      complex: GetComplexMock;
+      fetch: GetFetchMock;
       zodType: typeof generateMock;
     };
     container: Container;
