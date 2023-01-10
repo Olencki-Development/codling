@@ -20,9 +20,11 @@
     "test:types": "tsc --noEmit"
   },
   "devDependencies": {
-    "@codling/testable": "*"
+    "@codling/testable": "*",
+    "@types/qs": "^6.9.7"
   },
   "dependencies": {
-    "@codling/utils": "*"
+    "@codling/utils": "*",
+    "qs": "^6.11.0"
   }
 }
