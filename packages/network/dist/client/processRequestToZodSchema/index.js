@@ -1,5 +1,5 @@
 import { handleUnknownError } from '../../handleUnknownError.js';
-import { processRequest } from '../processRequest.js';
+import { processRequestToJSON } from '../processRequestToJSON/index.js';
 /**
  * Execute the request and return a json result based on the network status and zod schema
  * @param request fetch request
@@ -7,8 +7,7 @@ import { processRequest } from '../processRequest.js';
  */
 export async function safeProcessRequestToZodSchema(request, schema) {
   try {
-    const response = await processRequest(request);
-    const json = await response.json();
+    const json = await processRequestToJSON(request);
     return {
       success: true,
       data: schema.parse(json),
