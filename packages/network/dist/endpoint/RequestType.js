@@ -62,6 +62,7 @@ export class RequestType {
       options.headers?.['Content-Type'].toLowerCase() === 'application/json';
     return processRequestToZodSchema(
       options.fetch(url, {
+        method: this.method,
         headers: options.headers ?? undefined,
         body:
           this.method === 'GET'
