@@ -55,6 +55,7 @@ export type RequestExecuteDef<
   T_Body extends z.ZodTypeAny
 > = GetParamInput<T_Pathname> & GetQueryInput<T_Query> & GetBodyInput<T_Body>;
 export type RequestExecuteOptions = {
+  server?: string;
   fetch: typeof fetch;
   headers?: Record<string, string>;
 };
