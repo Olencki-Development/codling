@@ -22,3 +22,4 @@ export const client = {
   processRequestToEntity,
   safeProcessRequestToEntity,
 };
+export * as endpoint from './endpoint/endpoint.js';

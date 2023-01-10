@@ -21,3 +21,4 @@ export declare const client: {
   processRequestToEntity: typeof processRequestToEntity;
   safeProcessRequestToEntity: typeof safeProcessRequestToEntity;
 };
+export * as endpoint from './endpoint/endpoint.js';
