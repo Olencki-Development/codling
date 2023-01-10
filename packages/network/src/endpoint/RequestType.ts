@@ -94,6 +94,10 @@ export class RequestType<
       url = `${url}?${query}`;
     }
 
+    if (options.server) {
+      url = `${options.server}${url}`;
+    }
+
     const hasJsonContent =
       options.headers?.['Content-Type'].toLowerCase() === 'application/json';
     return processRequestToZodSchema(

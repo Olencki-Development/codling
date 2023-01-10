@@ -38,6 +38,7 @@ export type RequestExecuteDef<
 > = GetParamInput<T_Pathname> & GetQueryInput<T_Query> & GetBodyInput<T_Body>;
 
 export type RequestExecuteOptions = {
+  server?: string;
   fetch: typeof fetch;
   headers?: Record<string, string>;
 };
