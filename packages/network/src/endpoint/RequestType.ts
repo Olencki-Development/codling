@@ -61,6 +61,9 @@ export class RequestType<
   body<T_NewBody extends z.ZodTypeAny>(
     body: T_NewBody
   ): RequestType<T_Method, T_Pathname, T_Query, T_NewBody, T_Response> {
+    if (this.method === 'GET') {
+      throw new Error('Request with GET/HEAD method cannot have body.');
+    }
     return new RequestType({
       method: this.method,
       pathname: this.pathname,
@@ -103,7 +106,10 @@ export class RequestType<
     return processRequestToZodSchema(
       options.fetch(url, {
         headers: options.headers ?? undefined,
-        body: this._getFormattedBody(def.body, hasJsonContent),
+        body:
+          this.method === 'GET'
+            ? undefined
+            : this._getFormattedBody(def.body, hasJsonContent),
       }),
       this.responseSchema
     );
