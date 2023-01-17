@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/ban-types */
 export type Pathname = string;
 
 /**
@@ -33,7 +34,7 @@ type ParseParamString<T_Pathname extends Pathname> =
     ? {
         [key in T_Param]: string;
       }
-    : Record<string, never>;
+    : {};
 
 /**
  * Parse a path string into params
@@ -52,7 +53,7 @@ type ParseParamString<T_Pathname extends Pathname> =
  */
 type ParsePathname<
   T_Pathname extends Pathname,
-  T_Params extends { [param: string]: string } = Record<string, never>
+  T_Params extends { [param: string]: string } = {}
 > = T_Pathname extends `${infer T_LeadingPathname}/${infer T_TrailingPathname}`
   ? ParsePathname<
       T_TrailingPathname,
@@ -75,6 +76,6 @@ type ParsePathname<
  * type Result = ParsePathname<"/applications/responses">
  * //     ^= { }
  */
-export type RequestParams<T extends Pathname> = ParsePathname<
+export type InferPathnameParams<T extends Pathname> = ParsePathname<
   RemoveTailingSlash<RemoveLeadingSlash<T>>
 >;
