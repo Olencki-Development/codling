@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/ban-types */
 import { z } from 'zod';
 import type { Pathname } from './pathname.types.js';
+import type { RouteType } from './RouteType.js';
 
 export const RouteMethod = z.enum(['GET', 'POST', 'PATCH', 'DELETE']);
 export type RouteMethod = z.infer<typeof RouteMethod>;
@@ -23,3 +24,5 @@ export type RouteTypeDef<
   body: T_Body;
   response: T_Response;
 };
+
+export type RouteTypeAny = RouteType<any, any, any, any, any>;
