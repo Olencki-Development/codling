@@ -9,7 +9,7 @@ export type RouteMethod = z.infer<typeof RouteMethod>;
 export type RouteQuery = z.SomeZodObject | z.ZodUndefined;
 export type RouteBody = z.ZodTypeAny;
 
-export type RouteResponse = z.SomeZodObject | z.ZodUnknown;
+export type RouteResponse = z.ZodTypeAny;
 
 export type RouteTypeDef<
   T_Method extends RouteMethod,
