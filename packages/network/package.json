@@ -1,6 +1,6 @@
 {
   "name": "@codling/network",
-  "version": "3.2.3",
+  "version": "4.0.0",
   "type": "module",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
