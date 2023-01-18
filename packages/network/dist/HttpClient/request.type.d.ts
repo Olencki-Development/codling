@@ -3,9 +3,7 @@ import type { z } from 'zod';
 import type { InferPathnameParams } from '../Route/pathname.types.js';
 import type { RouteMethod, RouteTypeAny } from '../Route/route.types.js';
 import type { HttpClientDef, StatusHandlerFunc } from './types.js';
-
 type EmptyTypes = Record<string, never> | undefined | never | null;
-
 type InferRouteOptions<R> = R extends RouteType<
   RouteMethod,
   infer P,
@@ -18,7 +16,6 @@ type InferRouteOptions<R> = R extends RouteType<
       body: z.input<B>;
     }
   : never;
-
 type GetRequiredRouteFields<R> = InferRouteOptions<R> extends Record<
   string,
   unknown
@@ -29,7 +26,6 @@ type GetRequiredRouteFields<R> = InferRouteOptions<R> extends Record<
         : K;
     }[keyof InferRouteOptions<R>]
   : never;
-
 export type RequestDef<R extends RouteTypeAny> = {
   route: R['_def'];
   data: {
@@ -38,7 +34,6 @@ export type RequestDef<R extends RouteTypeAny> = {
   statusHandlers: Map<number, StatusHandlerFunc>;
   server: HttpClientDef;
 };
-
 export type RequestResult<T> =
   | {
       success: true;
@@ -48,3 +43,4 @@ export type RequestResult<T> =
       success: false;
       error: Error | undefined;
     };
+export {};

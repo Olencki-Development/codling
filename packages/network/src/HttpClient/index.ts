@@ -14,7 +14,7 @@ export class HttpClient {
 
   constructor(readonly _def: HttpClientDef) {}
 
-  onStatus<T extends Error | undefined = undefined>(
+  onStatus<T extends Error | undefined | void = void>(
     status: number,
     handler: StatusHandlerFunc<T>
   ) {
