@@ -39,12 +39,13 @@ export type RequestDef<R extends RouteTypeAny> = {
   server: HttpClientDef;
 };
 
-export type RequestResult<T> =
-  | {
-      success: true;
-      data: T;
-    }
-  | {
-      success: false;
-      error: Error | undefined;
-    };
+export type RequestResultFailed = {
+  success: false;
+  error: Error | undefined;
+};
+
+export type RequestResultSuccess<T> = {
+  success: true;
+  data: T;
+};
+export type RequestResult<T> = RequestResultFailed | RequestResultSuccess<T>;
