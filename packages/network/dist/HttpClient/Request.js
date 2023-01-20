@@ -1,3 +1,4 @@
+import { z } from 'zod';
 import qs from 'qs';
 import { CodlingNetworkError } from '../index.js';
 import { handleUnknownError } from '../handleUnknownError.js';
@@ -8,11 +9,18 @@ export class RequestType {
   }
   async execute(fetch, init) {
     try {
-      const query = this._getQuery();
-      const url = `${this._getOrigin()}/${this._getFormattedPathname()}${
-        query?.length ? `?${query}` : ''
-      }`;
-      const body = this._getBody();
+      const parsedData = z
+        .object({
+          params: this._getParamSchema(),
+          query: this._def.route.query,
+          body: this._def.route.body,
+        })
+        .parse(this._def.data);
+      const query = this._getQuery(parsedData);
+      const url = `${this._getOrigin()}/${this._getFormattedPathname(
+        parsedData
+      )}${query?.length ? `?${query}` : ''}`;
+      const body = this._getBody(parsedData);
       const mergedInit = deepmerge(this._def.server.init ?? {}, init ?? {}, {
         method: this._def.route.method,
         body,
@@ -48,7 +56,24 @@ export class RequestType {
       };
     }
   }
-  _getFormattedPathname() {
+  _getParamSchema() {
+    const pathname = this._def.route.pathname;
+    const arrayParamKeys = pathname.split('/').reduce((output, item) => {
+      if (!item.length) {
+        return output;
+      }
+      if (item.startsWith(':')) {
+        output.push(item.slice(1));
+      }
+      return output;
+    }, []);
+    let paramSchema = z.object({});
+    for (const paramKey of arrayParamKeys) {
+      paramSchema = paramSchema.setKey(paramKey, z.string().min(1).trim());
+    }
+    return paramSchema;
+  }
+  _getFormattedPathname(data) {
     const pathname = this._def.route.pathname;
     return pathname
       .split('/')
@@ -57,7 +82,7 @@ export class RequestType {
           return output;
         }
         if (item.startsWith(':')) {
-          const param = this._def.data.params?.[item.slice(1)];
+          const param = data.params?.[item.slice(1)];
           output.push(param);
         } else {
           output.push(item);
@@ -74,15 +99,15 @@ export class RequestType {
       ? this._def.server.url.slice(0, -1)
       : this._def.server.url;
   }
-  _getQuery() {
-    if ('query' in this._def.data) {
-      return qs.stringify(this._def.data.query);
+  _getQuery(data) {
+    if ('query' in data) {
+      return qs.stringify(data.query);
     }
     return null;
   }
-  _getBody() {
-    if ('body' in this._def.data && typeof this._def.data.body === 'object') {
-      return JSON.stringify(this._def.data.body);
+  _getBody(data) {
+    if ('body' in data && typeof data.body === 'object') {
+      return JSON.stringify(data.body);
     }
     return undefined;
   }

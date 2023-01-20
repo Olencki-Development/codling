@@ -1,6 +1,6 @@
 import type { RouteTypeAny } from '../Route/route.types.js';
 import type { RequestDef, RequestResult } from './request.type.js';
-import type { z } from 'zod';
+import { z } from 'zod';
 import type { Pathname } from '../Route/pathname.types.js';
 import qs from 'qs';
 import { CodlingNetworkError } from '../index.js';
@@ -15,11 +15,19 @@ export class RequestType<R extends RouteTypeAny> {
     init?: Parameters<typeof global.fetch>[1]
   ): Promise<RequestResult<T>> {
     try {
-      const query = this._getQuery();
-      const url = `${this._getOrigin()}/${this._getFormattedPathname()}${
-        query?.length ? `?${query}` : ''
-      }`;
-      const body = this._getBody();
+      const parsedData = z
+        .object({
+          params: this._getParamSchema(),
+          query: this._def.route.query,
+          body: this._def.route.body,
+        })
+        .parse(this._def.data) as unknown as typeof this._def.data;
+
+      const query = this._getQuery(parsedData);
+      const url = `${this._getOrigin()}/${this._getFormattedPathname(
+        parsedData
+      )}${query?.length ? `?${query}` : ''}`;
+      const body = this._getBody(parsedData);
 
       const mergedInit = deepmerge(this._def.server.init ?? {}, init ?? {}, {
         method: this._def.route.method,
@@ -60,7 +68,31 @@ export class RequestType<R extends RouteTypeAny> {
     }
   }
 
-  protected _getFormattedPathname() {
+  protected _getParamSchema() {
+    const pathname: Pathname = this._def.route.pathname;
+
+    const arrayParamKeys = pathname
+      .split('/')
+      .reduce((output: string[], item) => {
+        if (!item.length) {
+          return output;
+        }
+        if (item.startsWith(':')) {
+          output.push(item.slice(1));
+        }
+
+        return output;
+      }, []);
+
+    let paramSchema = z.object({});
+    for (const paramKey of arrayParamKeys) {
+      paramSchema = paramSchema.setKey(paramKey, z.string().min(1).trim());
+    }
+
+    return paramSchema;
+  }
+
+  protected _getFormattedPathname(data: typeof this._def.data) {
     const pathname: Pathname = this._def.route.pathname;
 
     return pathname
@@ -70,7 +102,7 @@ export class RequestType<R extends RouteTypeAny> {
           return output;
         }
         if (item.startsWith(':')) {
-          const param = (this._def.data as any).params?.[item.slice(1)];
+          const param = (data as any).params?.[item.slice(1)];
           output.push(param);
         } else {
           output.push(item);
@@ -91,17 +123,17 @@ export class RequestType<R extends RouteTypeAny> {
       : this._def.server.url;
   }
 
-  protected _getQuery() {
-    if ('query' in this._def.data) {
-      return qs.stringify(this._def.data.query);
+  protected _getQuery(data: typeof this._def.data) {
+    if ('query' in data) {
+      return qs.stringify(data.query);
     }
 
     return null;
   }
 
-  protected _getBody() {
-    if ('body' in this._def.data && typeof this._def.data.body === 'object') {
-      return JSON.stringify(this._def.data.body);
+  protected _getBody(data: typeof this._def.data) {
+    if ('body' in data && typeof data.body === 'object') {
+      return JSON.stringify(data.body);
     }
 
     return undefined;
