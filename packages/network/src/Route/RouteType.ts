@@ -1,4 +1,4 @@
-import type { Pathname } from './pathname.types.js';
+import type { Pathname, InferPathnameParams } from './pathname.types.js';
 import type {
   RouteTypeDef,
   RouteMethod,
@@ -6,6 +6,7 @@ import type {
   RouteBody,
   RouteResponse,
 } from './route.types.js';
+import { z } from 'zod';
 
 export class RouteType<
   T_Method extends RouteMethod = RouteMethod,
@@ -24,6 +25,50 @@ export class RouteType<
     >
   ) {}
 
+  get method() {
+    return this._def.method;
+  }
+
+  get pathname() {
+    return this._def.pathname;
+  }
+
+  get paramSchema(): z.ZodObject<InferPathnameParams<T_Pathname>> {
+    const pathname: Pathname = this._def.pathname;
+
+    const arrayParamKeys = pathname
+      .split('/')
+      .reduce((output: string[], item) => {
+        if (!item.length) {
+          return output;
+        }
+        if (item.startsWith(':')) {
+          output.push(item.slice(1));
+        }
+
+        return output;
+      }, []);
+
+    let paramSchema = z.object({});
+    for (const paramKey of arrayParamKeys) {
+      paramSchema = paramSchema.setKey(paramKey, z.string().min(1).trim());
+    }
+
+    return paramSchema as z.ZodObject<InferPathnameParams<T_Pathname>>;
+  }
+
+  get responseSchema() {
+    return this._def.response;
+  }
+
+  get querySchema() {
+    return this._def.query;
+  }
+
+  get bodySchema() {
+    return this._def.body;
+  }
+
   query<T_NewQuery extends RouteQuery>(query: T_NewQuery) {
     return new RouteType({
       ...this._def,
@@ -41,7 +86,7 @@ export class RouteType<
     });
   }
 
-  expectJSON<T_NewResponse extends RouteResponse>(response: T_NewResponse) {
+  response<T_NewResponse extends RouteResponse>(response: T_NewResponse) {
     return new RouteType({
       ...this._def,
       response,

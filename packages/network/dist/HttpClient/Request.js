@@ -3,17 +3,25 @@ import qs from 'qs';
 import { CodlingNetworkError } from '../index.js';
 import { handleUnknownError } from '../handleUnknownError.js';
 import { deepmerge } from 'deepmerge-ts';
+import { RequestJSONType } from './RequestJSON.js';
+import { RequestTextType } from './RequestText.js';
 export class RequestType {
   constructor(_def) {
     this._def = _def;
+  }
+  json() {
+    return new RequestJSONType(this._def);
+  }
+  text() {
+    return new RequestTextType(this._def);
   }
   async execute(fetch, init) {
     try {
       const parsedData = z
         .object({
-          params: this._getParamSchema(),
-          query: this._def.route.query,
-          body: this._def.route.body,
+          params: this._def.route.paramSchema,
+          query: this._def.route.querySchema,
+          body: this._def.route.bodySchema,
         })
         .parse(this._def.data);
       const query = this._getQuery(parsedData);
@@ -35,43 +43,26 @@ export class RequestType {
               'An unknown network error has occured.',
               response
             ),
+            response,
           };
         }
         return {
           success: false,
           error: (await statusHandler(response)) ?? undefined,
+          response,
         };
       }
-      const json = await response.json();
       return {
         success: true,
-        data: this._def.route.response
-          ? this._def.route.response.parse(json)
-          : json,
+        response,
       };
     } catch (e) {
       return {
         success: false,
         error: handleUnknownError(e),
+        response: undefined,
       };
     }
-  }
-  _getParamSchema() {
-    const pathname = this._def.route.pathname;
-    const arrayParamKeys = pathname.split('/').reduce((output, item) => {
-      if (!item.length) {
-        return output;
-      }
-      if (item.startsWith(':')) {
-        output.push(item.slice(1));
-      }
-      return output;
-    }, []);
-    let paramSchema = z.object({});
-    for (const paramKey of arrayParamKeys) {
-      paramSchema = paramSchema.setKey(paramKey, z.string().min(1).trim());
-    }
-    return paramSchema;
   }
   _getFormattedPathname(data) {
     const pathname = this._def.route.pathname;

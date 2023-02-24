@@ -10,7 +10,7 @@ export class HttpClient {
   }
   request(route, ...[maybeOptions]) {
     return new RequestType({
-      route: route._def,
+      route,
       data: {
         params: maybeOptions?.params ?? {},
         query: maybeOptions?.query,

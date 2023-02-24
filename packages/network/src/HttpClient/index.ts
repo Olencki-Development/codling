@@ -24,7 +24,7 @@ export class HttpClient {
     ...[maybeOptions]: HttpClientRequestArgs<R>
   ) {
     return new RequestType<R>({
-      route: route._def,
+      route,
       data: {
         params: (maybeOptions as any)?.params ?? {},
         query: (maybeOptions as any)?.query,

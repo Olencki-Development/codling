@@ -31,7 +31,7 @@ type GetRequiredRouteFields<R> = InferRouteOptions<R> extends Record<
   : never;
 
 export type RequestDef<R extends RouteTypeAny> = {
-  route: R['_def'];
+  route: R;
   data: {
     [key in GetRequiredRouteFields<R>]: InferRouteOptions<R>[key];
   };
@@ -42,10 +42,15 @@ export type RequestDef<R extends RouteTypeAny> = {
 export type RequestResultFailed = {
   success: false;
   error: Error | undefined;
+  response: Awaited<ReturnType<typeof global.fetch>> | undefined;
 };
 
-export type RequestResultSuccess<T> = {
+export type RequestResultSuccess = {
   success: true;
-  data: T;
+  response: Awaited<ReturnType<typeof global.fetch>>;
 };
-export type RequestResult<T> = RequestResultFailed | RequestResultSuccess<T>;
+
+// eslint-disable-next-line @typescript-eslint/ban-types
+export type RequestResult<T extends Record<string, unknown> = {}> =
+  | RequestResultFailed
+  | (RequestResultSuccess & T);
