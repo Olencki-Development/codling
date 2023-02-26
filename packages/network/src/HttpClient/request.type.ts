@@ -1,21 +1,39 @@
 import type { RouteType } from '../Route/RouteType.js';
 import type { z } from 'zod';
-import type { InferPathnameParams } from '../Route/pathname.types.js';
-import type { RouteMethod, RouteTypeAny } from '../Route/route.types.js';
+import type { RouteTypeAny } from '../Route/route.types.js';
 import type { HttpClientDef, StatusHandlerFunc } from './types.js';
 
 type EmptyTypes = Record<string, never> | undefined | never | null;
 
-type InferRouteOptions<R> = R extends RouteType<
-  RouteMethod,
-  infer P,
-  infer Q,
-  infer B
+export type InferRequestData<R> = R extends RouteType<
+  infer T_RouteMathod,
+  infer T_Pathname,
+  infer T_ParamsValue,
+  infer T_Params,
+  infer T_Query,
+  infer T_Body,
+  infer T_RouteResponse
 >
   ? {
-      params: InferPathnameParams<P>;
-      query: z.input<Q>;
-      body: z.input<B>;
+      params: z.output<T_Params>;
+      query: z.output<T_Query>;
+      body: z.output<T_Body>;
+    }
+  : Record<string, never>;
+
+type InferRouteOptions<R> = R extends RouteType<
+  infer T_RouteMathod,
+  infer T_Pathname,
+  infer T_ParamsValue,
+  infer T_Params,
+  infer T_Query,
+  infer T_Body,
+  infer T_RouteResponse
+>
+  ? {
+      params: z.input<T_Params>;
+      query: z.input<T_Query>;
+      body: z.input<T_Body>;
     }
   : never;
 

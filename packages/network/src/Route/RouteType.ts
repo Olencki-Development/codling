@@ -60,7 +60,7 @@ export class RouteType<
   /**
    * Helper to retrieve the generated parameter validation schema this route uses
    */
-  get paramSchema() {
+  get paramsSchema() {
     return this._def.params;
   }
 
@@ -86,11 +86,19 @@ export class RouteType<
   }
 
   /**
+   * Helper to check if there is a payload to send
+   * @returns {boolean} Value calculated by body schema being an instance of ZodUndefined
+   */
+  hasPayload(): boolean {
+    return !(this._def.body instanceof z.ZodUndefined);
+  }
+
+  /**
    * Helper to retrieve the full request validation schema this route uses
    */
   get requestSchema() {
     return z.object({
-      params: this.paramSchema,
+      params: this.paramsSchema,
       query: this.querySchema,
       body: this.bodySchema,
     });

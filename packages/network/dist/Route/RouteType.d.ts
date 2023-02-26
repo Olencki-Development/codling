@@ -57,7 +57,7 @@ export declare class RouteType<
   /**
    * Helper to retrieve the generated parameter validation schema this route uses
    */
-  get paramSchema(): T_Params;
+  get paramsSchema(): T_Params;
   /**
    * Helper to retrieve the response validation schema this route uses
    */
@@ -70,6 +70,11 @@ export declare class RouteType<
    * Helper to retrieve the body validation schema this route uses
    */
   get bodySchema(): T_Body;
+  /**
+   * Helper to check if there is a payload to send
+   * @returns {boolean} Value calculated by body schema being an instance of ZodUndefined
+   */
+  hasPayload(): boolean;
   /**
    * Helper to retrieve the full request validation schema this route uses
    */
