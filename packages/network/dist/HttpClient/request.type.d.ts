@@ -1,7 +1,8 @@
 import type { RouteType } from '../Route/RouteType.js';
 import type { z } from 'zod';
 import type { RouteTypeAny } from '../Route/route.types.js';
-import type { HttpClientDef, StatusHandlerFunc } from './types.js';
+import type { StatusHandlerFunc } from './types.js';
+import type { HttpClient } from './index.js';
 type EmptyTypes = Record<string, never> | undefined | never | null;
 export type InferRequestData<R> = R extends RouteType<
   infer T_RouteMathod,
@@ -43,13 +44,16 @@ type GetRequiredRouteFields<R> = InferRouteOptions<R> extends Record<
         : K;
     }[keyof InferRouteOptions<R>]
   : never;
-export type RequestDef<R extends RouteTypeAny> = {
-  route: R;
+export type RequestDef<
+  T_Route extends RouteTypeAny,
+  T_Client extends HttpClient
+> = {
+  route: T_Route;
   data: {
-    [key in GetRequiredRouteFields<R>]: InferRouteOptions<R>[key];
+    [key in GetRequiredRouteFields<T_Route>]: InferRouteOptions<T_Route>[key];
   };
   statusHandlers: Map<number, StatusHandlerFunc>;
-  server: HttpClientDef;
+  server: T_Client;
 };
 export type RequestResultFailed = {
   success: false;

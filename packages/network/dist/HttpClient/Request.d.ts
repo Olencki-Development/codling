@@ -5,24 +5,22 @@ import type {
   RequestDef,
   RequestResult,
 } from './request.type.js';
-export declare class RequestType<R extends RouteTypeAny> {
-  readonly _def: RequestDef<R>;
-  constructor(_def: RequestDef<R>);
-  getData(): InferRequestData<R>;
+import { HttpClient } from '../index.js';
+export declare class RequestType<
+  T_Route extends RouteTypeAny,
+  T_Client extends HttpClient
+> {
+  readonly _def: RequestDef<T_Route, T_Client>;
+  constructor(_def: RequestDef<T_Route, T_Client>);
+  getData(): InferRequestData<T_Route>;
   getUrl(): URL;
   execute(
     fetch: typeof global.fetch,
     init?: Parameters<typeof global.fetch>[1]
   ): Promise<
     RequestResult<{
-      data: z.infer<R['responseSchema']>;
+      data: z.infer<T_Route['responseSchema']>;
     }>
   >;
-  protected _getFormattedPathname(data: InferRequestData<R>): string;
-  protected _getBody(headers: HeadersInit): any;
-  protected _fetchResponseData(
-    response: Response,
-    requestHeaders: HeadersInit
-  ): Promise<any>;
-  protected _getHeader(headers: HeadersInit, headerName: string): string | null;
+  protected _getFormattedPathname(data: InferRequestData<T_Route>): string;
 }

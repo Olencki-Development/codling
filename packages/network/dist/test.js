@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import { HttpClient, route } from './index.js';
+import { HttpClient, JSONDataCoder, route } from './index.js';
 import fetch from 'node-fetch';
 const User = z.object({ id: z.number(), name: z.string() });
 const findUserById = route
@@ -32,6 +32,7 @@ createUser.implement((options) => {
 });
 const client = new HttpClient({
   url: 'https://jsonplaceholder.typicode.com',
+  coder: new JSONDataCoder(),
 });
 // const request = client.request(findUserById, {
 //   params: {
@@ -44,10 +45,5 @@ const request = client.request(createUser, {
   },
 });
 console.log(request.getUrl(), request.getData());
-const result = await request.execute(fetch, {
-  headers: {
-    'Content-Type': 'application/json',
-    Accepts: 'application/json',
-  },
-});
+const result = await request.execute(fetch);
 console.log(result);

@@ -17,7 +17,7 @@ export class HttpClient {
         body: maybeOptions?.body,
       },
       statusHandlers: this._statusHandlers,
-      server: this._def,
+      server: this,
     });
   }
 }
