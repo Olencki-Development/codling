@@ -3,17 +3,9 @@ import qs from 'qs';
 import { CodlingNetworkError } from '../index.js';
 import { handleUnknownError } from '../handleUnknownError.js';
 import { deepmerge } from 'deepmerge-ts';
-import { RequestJSONType } from './RequestJSON.js';
-import { RequestTextType } from './RequestText.js';
 export class RequestType {
   constructor(_def) {
     this._def = _def;
-  }
-  json() {
-    return new RequestJSONType(this._def);
-  }
-  text() {
-    return new RequestTextType(this._def);
   }
   async execute(fetch, init) {
     try {

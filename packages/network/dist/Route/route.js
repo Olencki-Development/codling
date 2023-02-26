@@ -1,6 +1,22 @@
 import { RouteType } from './RouteType.js';
 import { z } from 'zod';
 export class RouteFactory {
+  static getParamsSchema(pathname) {
+    const arrayParamKeys = pathname.split('/').reduce((output, item) => {
+      if (!item.length) {
+        return output;
+      }
+      if (item.startsWith(':')) {
+        output.push(item.slice(1));
+      }
+      return output;
+    }, []);
+    let paramSchema = z.object({});
+    for (const paramKey of arrayParamKeys) {
+      paramSchema = paramSchema.setKey(paramKey, z.string().min(1).trim());
+    }
+    return paramSchema;
+  }
   get(url) {
     return new RouteType({
       method: 'GET',
@@ -8,6 +24,7 @@ export class RouteFactory {
       query: z.undefined(),
       body: z.undefined(),
       response: z.unknown(),
+      params: RouteFactory.getParamsSchema(url),
     });
   }
   post(url) {
@@ -17,6 +34,7 @@ export class RouteFactory {
       query: z.undefined(),
       body: z.undefined(),
       response: z.unknown(),
+      params: RouteFactory.getParamsSchema(url),
     });
   }
   patch(url) {
@@ -26,6 +44,7 @@ export class RouteFactory {
       query: z.undefined(),
       body: z.undefined(),
       response: z.unknown(),
+      params: RouteFactory.getParamsSchema(url),
     });
   }
   delete(url) {
@@ -35,6 +54,7 @@ export class RouteFactory {
       query: z.undefined(),
       body: z.undefined(),
       response: z.unknown(),
+      params: RouteFactory.getParamsSchema(url),
     });
   }
 }

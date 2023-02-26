@@ -15,3 +15,5 @@
 **/.serverless
 
 lerna-debug.log
+
+**/test.ts
