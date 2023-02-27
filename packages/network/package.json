@@ -19,11 +19,11 @@
     "test": "mocha --loader=ts-node/esm -r ts-node/register --project tsconfig.json \"./src/setup.test.ts\" \"./src/**/*.test.ts\"",
     "test:coverage": "nyc npm run test",
     "test:types": "tsc --noEmit",
-    "release": "npm version -w @codling/network -- "
+    "release": "npm version -w @codling/network -- ",
+    "publish": "npm publish -w @codling/network"
   },
   "devDependencies": {
-    "@codling/testable": "*",
-    "@types/qs": "^6.9.7"
+    "@codling/testable": "*"
   },
   "dependencies": {
     "deepmerge-ts": "^4.2.2"
