@@ -1,4 +1,7 @@
-import { z } from 'zod';
+import { z, ZodObject, ZodString } from 'zod';
+import type { HttpClient } from '../HttpClient/index.js';
+import type { IDataCoder } from '../DataCoder/types.js';
+import type { JSONDataCoder } from '../DataCoder/JSONDataCoder.js';
 import type { Pathname } from './pathname.types.js';
 import type {
   RouteTypeDef,
@@ -15,9 +18,30 @@ import type {
 } from './routeHandler.types.js';
 
 /**
- * @class RouteType
- * @description A class instance contains all information about a route with validation schemas to ensure data integrity.
- * @see RouteFactory instance "route" to generate instances of this class
+ * The main route definition class.
+ *
+ * This is used to create an instance of a route and contain all information about it: query, params, body, response, etc. The body, query, and params are dynamically extracted from {@link ZodType} instances.
+ *
+ * The `route` export is a default instance provided as an export.
+ *
+ * ### Example
+ *
+ * An example of what a create user request might look like.
+ * ```ts
+ * const req = route
+ *   .post('/users/:userId/post')
+ *   .body(z.object({
+ *     name: z.string().trim().min(1),
+ *     email: z.string().trim().email()
+ *   }))
+ *   .response(z.object({
+ *     id: z.number().finite().min(0),
+ *     name: z.string().trim().min(1),
+ *     email: z.string().trim().email()
+ *   }))
+ *
+ * ```
+ *
  */
 export class RouteType<
   T_Method extends RouteMethod = RouteMethod,
@@ -106,6 +130,30 @@ export class RouteType<
 
   /**
    * Assign a custom param parser to the route.
+   *
+   * By default the params are expected to be an instance of {@link ZodString}. This method allows the param schema value to be overwritten.
+   *
+   * Only {@link ZodObject} is allowed for a params.
+   *
+   * ### Examples
+   *
+   * Ensure userId field is a numbers.
+   * ```ts
+   * route
+   *   .get('/users/:userId/post')
+   *   .params(z.object({
+   *     userId: z.coerce.number()
+   *   }))
+   * ```
+   *
+   * If there are no params, do not allow this option.
+   * ```ts
+   * route
+   *   .get('/users')
+   *   .params(z.object({
+   *     userId: z.coerce.number()
+   *   })) // errors
+   * ```
    */
   params<
     T_NewParamsValue extends z.ZodTypeAny,
@@ -127,6 +175,18 @@ export class RouteType<
 
   /**
    * Assign a query to the route.
+   *
+   * Only {@link ZodObject} is allowed for a query.
+   *
+   * ### Example
+   *
+   * ```ts
+   * route
+   *   .get('/users')
+   *   .query(z.object({
+   *     sort: z.literal('desc')
+   *   }))
+   * ```
    */
   query<T_NewQuery extends RouteQuery>(query: T_NewQuery) {
     return new RouteType<
@@ -145,7 +205,18 @@ export class RouteType<
 
   /**
    * Assign a body to the route.
-   * @warn GET/HEAD method cannot have a body
+   *
+   * **GET/HEAD method cannot have a body. It will throw.**
+   *
+   * ### Example
+   *
+   * ```ts
+   * route
+   *   .post('/users')
+   *   .body(z.object({
+   *     name: z.string()
+   *   }))
+   * ```
    */
   body<T_NewBody extends RouteBody>(body: T_NewBody) {
     if (['GET', 'HEAD'].includes(this._def.method.toUpperCase())) {
@@ -167,6 +238,33 @@ export class RouteType<
 
   /**
    * Assign a response to the route.
+   *
+   * This is the expected value from the route request.
+   *
+   * ### Examples
+   *
+   * Example with json response. Make sure {@link HttpClient} is using {@link JSONDataCoder}.
+   * ```ts
+   * route
+   *   .post('/users')
+   *   .body(z.object({
+   *     name: z.string()
+   *   }))
+   *   .response(z.object({
+   *     id: z.number(),
+   *     name: z.string()
+   *   }))
+   * ```
+   *
+   * Example with custom response. Make sure to create a custom {@link IDataCoder} for use with {@link HttpClient}.
+   * ```ts
+   * route
+   *   .post('/users')
+   *   .body(z.object({
+   *     name: z.string()
+   *   }))
+   *   .response(z.instanceOf(Buffer))
+   * ```
    */
   response<T_NewResponse extends RouteResponse>(response: T_NewResponse) {
     return new RouteType<
@@ -186,6 +284,23 @@ export class RouteType<
   /**
    * Create an implementation method for this route.
    * @returns {function} A wrapped function that validates input and result values from the provided lambda. You also have access to the underlying route through the `route` property.
+   *
+   * ### Example
+   *
+   * ```ts
+   * routes
+   *   .get('/users/:userId')
+   *   .query(z.object({ sort: z.literal('desc') }))
+   *   .response(z.object({ id: z.number() }))
+   *   .implement(function (options) {
+   *     options.params.userId // number
+   *     options.query.sort // 'desc'
+   *
+   *     return {
+   *       id: 1
+   *     }
+   *   })
+   * ```
    */
   implement(func: RouteHandlerFunc<this>): RouteHandler<this> {
     const handler = async (options: RouteHandlerInputOptions<this>) => {
