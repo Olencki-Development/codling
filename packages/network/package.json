@@ -1,6 +1,6 @@
 {
   "name": "@codling/network",
-  "version": "5.0.1",
+  "version": "5.0.2",
   "description": "Type safe networking client and server handler.",
   "type": "module",
   "main": "dist/index.js",
@@ -12,6 +12,16 @@
     "type": "git",
     "url": "git+https://github.com/Olencki-Development/codling.git"
   },
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "types": "./dist/index.d.ts"
+    },
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "/dist"
+  ],
   "scripts": {
     "build": "npm run clean && npm run compile",
     "clean": "rimraf dist && rimraf tsconfig.tsbuildinfo",
