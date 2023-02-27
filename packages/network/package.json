@@ -1,6 +1,6 @@
 {
   "name": "@codling/network",
-  "version": "5.0.0",
+  "version": "5.0.1",
   "description": "Type safe networking client and server handler.",
   "type": "module",
   "main": "dist/index.js",
