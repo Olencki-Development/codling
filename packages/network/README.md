@@ -2,7 +2,7 @@
 
 @codling/network is a type-safe and autocompletion-friendly typescript networking tool.
 
-![](https://github.com/Olencki-Development/codling/tree/main/packages/network/assets/demo.gif)
+![](https://github.com/Olencki-Development/codling/blob/main/packages/network/assets/demo.gif)
 
 @codling/network makes sure you know what data your sending and receiving at every level. On the client, requests only allow you to send and receive data that has been validated. On the server, data is sanitized before you can access it. You will know what is being processes every step of the way.
 
