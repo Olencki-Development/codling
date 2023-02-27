@@ -4,19 +4,19 @@
 
 ![](https://github.com/Olencki-Development/codling/blob/main/packages/network/assets/demo.gif)
 
-@codling/network makes sure you know what data your sending and receiving at every level. On the client, requests only allow you to send and receive data that has been validated. On the server, data is sanitized before you can access it. You will know what is being processes every step of the way.
+@codling/network makes sure you know what data your sending and receiving at every level. On the client, requests only allow you to send and receive data that has been validated. On the server, data is sanitized before you can access it. Pre-defined routes act as a data contract so you know what is being processes every step of the way.
 
 As shown in the gif above, through the pure magic of modern typescript, @codling/network is even able to parse
-the params from the pathname of a url to validate you're sending the correct data. @codling/network is able to url params, query values, body payloads, and responses values of all different data structures. 
+the params from the pathname of a url to validate you're sending the correct data. @codling/network is able to ensure url params, query values, body payloads, and responses of all different data structures.
 
-Of course, there are many types of data that can be sent and received over http(s). @codling/network provides a JSON data encoder/decoder by default. This value can be overwriten to support other protocols. You can even write your own.
+Of course, there are many types of data that can be sent and received over http(s). @codling/network provides a json data encoder/decoder but allows custom ones to be written and used.
 
 All API documentation is written in the typing files and you can simply `cmd-click` on the module, class
 or method you're using to see it.
 
 If you start using @codling/network and can't find something you'd want to use, please open an issue.
 
-You can find a more thorough introduction [here](https://github.com/Olencki-Development/codling/tree/main/packages/network/examples).
+You can find a more thorough examples [here](https://github.com/Olencki-Development/codling/tree/main/packages/network/examples).
 
 # Table of contents
 
@@ -47,9 +47,24 @@ npm install @codling/network zod
 
 The intent is to expand server support in the future. Right now, @codling/network offers great support for client requests and server request handlers.
 
+## A quick word from the author
+
+@codling/network was inspired to keep a data contract and typescript types aligned between a backend and frontend project. Recently, I've been seeing and writing more projects in a monorepo structure. This usually means I have an API/backend and a frontend project living inside a top level root project using something like [npm workspaces](https://docs.npmjs.com/cli/v7/using-npm/workspaces) or another alternative. When doing this, I found it a challenge to locate and keep entities aligned as the API grew and matured. By defining route contracts in a utility package, I was able to import them into the backend for implementation logic and access them in the frontend for execution. The main benefit over something like [tRPC](https://github.com/trpc/trpc) or [graphql](https://graphql.org/) is @codling/network follows a RESTful approach by design, allowing multiple endpoints for specific funtionality.
+
+I've provided an minimal folder structure to help communicate the benefits:
+
+```
+- root projct
+  - packages
+    - entities // a utility package that describes routes
+    - backend // a backend api that imports entities to handle implementation details
+    - frontend // a frontend that imports entities to execute typed requests to the backend
+```
+
+
 # Minimal example
 
-All you need to do is define your routes for the server. These routes are then used on the client to execute requests. On the server, functions can be generated to validate input and output data. This package was designed for monorepos that offer a nodejs server and client.
+All you need to do is define your routes for the server. These routes are then used on the client to execute requests. On the server, functions can be generated to validate input and output data. This package was designed with monorepos in mind that offer a nodejs server and client. It also offers a powerful networking tool that can be used on it's own.
 
 ```ts
 import { z } from 'zod'
