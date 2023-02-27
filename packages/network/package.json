@@ -1,6 +1,7 @@
 {
   "name": "@codling/network",
   "version": "4.0.3",
+  "description": "Type safe networking client and server handler.",
   "type": "module",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
