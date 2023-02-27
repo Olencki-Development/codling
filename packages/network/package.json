@@ -1,6 +1,6 @@
 {
   "name": "@codling/network",
-  "version": "4.0.3",
+  "version": "5.0.0",
   "description": "Type safe networking client and server handler.",
   "type": "module",
   "main": "dist/index.js",
@@ -18,7 +18,8 @@
     "compile": "tsc --build",
     "test": "mocha --loader=ts-node/esm -r ts-node/register --project tsconfig.json \"./src/setup.test.ts\" \"./src/**/*.test.ts\"",
     "test:coverage": "nyc npm run test",
-    "test:types": "tsc --noEmit"
+    "test:types": "tsc --noEmit",
+    "release": "npm version -w @codling/network -- "
   },
   "devDependencies": {
     "@codling/testable": "*",

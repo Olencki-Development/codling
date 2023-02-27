@@ -46,4 +46,5 @@ const request = client.request(createUser, {
 });
 console.log(request.getUrl(), request.getData());
 const result = await request.execute(fetch);
+result.success === true ? result.data.id.toString() : null;
 console.log(result);
